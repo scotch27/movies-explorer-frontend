@@ -1,0 +1,13 @@
+.navigation{
+    background-color: blueviolet;
+    width: 100%;
+}
+
+.navigation__container{
+    display: flex;
+    gap: 16px;
+    margin-left: 44px;
+    flex-direction: row;
+    justify-content: center;
+    background-color: green;
+}
