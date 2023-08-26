@@ -13,7 +13,7 @@ function Promo() {
         <p className="promo__subtitle">
           Листайте ниже, чтобы узнать больше про этот проект и его создателя.
         </p>
-        <a className="promo__link" href="/">
+        <a className="promo__link" href="#project">
           Узнать больше
         </a>
         <img className="promo__logo" src={landingLogo} alt="Логотип web" />
