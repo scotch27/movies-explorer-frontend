@@ -1,6 +1,7 @@
 .about-me {
-  padding: 110px 70px;
+  padding: 110px 70px 0;
 }
+
 .about-me__title {
     font-size: 22px;
     font-weight: 400;
