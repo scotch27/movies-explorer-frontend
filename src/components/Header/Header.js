@@ -5,31 +5,62 @@
 предусмотреть в вёрстке, даже несмотря на то, что сама авторизация ещё не реализована.
 */
 
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import Navigation from "./Navigation/Navigation";
-// import { Link, useLocation } from "react-router-dom";
 import logoMovies from "../../images/logo.svg";
+// import profileIcon from "../../images/profile.svg";
+import profileIcon from "../../images/profile-icon.svg";
 
-const auth = false;
+function Header({ loggedIn, userData, signOut }) {
+  // const [location, setLocation] = useState({ name: "", link: "" });
 
-function Header() {
+  const curentLocation = useLocation();
+
+  loggedIn = true;
+  // console.log(curentLocation.pathname);
+
+  // React.useEffect(() => {
+  //   if (loggedIn) {
+  //     setLocation({ name: "Выйти", link: "" });
+  //   } else if (curentLocation.pathname === "/sign-in") {
+  //     setLocation({ name: "Регистрация", link: "/sign-up" });
+  //   } else {
+  //     setLocation({ name: "Войти", link: "/sign-in" });
+  //   }
+  // }, [curentLocation, loggedIn]);
+
+  const profileMarkup = loggedIn ? (
+    <Link
+      className={`header__button header__profile ${
+        curentLocation.pathname === "/" ? "header__profile_main" : ""
+      }`}
+      to={"/profile"}
+    >
+      <span className=" header__profile-text">Аккаунт</span>
+      <img className="header__profile-icon" src={profileIcon} alt="Аккаунт" />
+    </Link>
+  ) : (
+    <>
+      <Link className="header__button header__register" to={"/signup"}>
+        Регистрация
+      </Link>
+      <Link className="header__button header__login" to={"/signin"}>
+        Войти
+      </Link>
+    </>
+  );
+
   return (
     <section className="header">
       <div className="header__container">
-        <img
-          src={logoMovies}
-          alt="Логотип места в России"
-          className="header__logo"
-        />
-        {auth && <Navigation />}
-        <div className="header__wrapper">
-          <a className="header__register" href="/">
-            Регистрация
-          </a>
-          <a className="header__login" href="/">
-            Войти
-          </a>
-        </div>
+        <Link className="header__logo" to={"/"}>
+          <img src={logoMovies} alt="Логотип" className="" />
+        </Link>
+
+        {/* {loggedIn && <Navigation />} */}
+        <div className="header__wrapper">{profileMarkup}</div>
       </div>
     </section>
   );
