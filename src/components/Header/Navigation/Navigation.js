@@ -2,6 +2,7 @@
 
 import { Link } from "react-router-dom";
 import "./Navigation.css";
+import { PAGES } from "../../../utils/const";
 
 function Navigation({isMainPage}) {
   const buttonClasses = `navigation__button ${
@@ -11,12 +12,12 @@ function Navigation({isMainPage}) {
   return (
     <div className="navigation">
       <div className="navigation__container">
-        <Link className={`${buttonClasses} navigation__films`} to={"/movies"}>
+        <Link className={`${buttonClasses} navigation__films`} to={PAGES.MOVIES}>
           Фильмы
         </Link>
         <Link
           className={`${buttonClasses} navigation__myfilms`}
-          to={"/saved-movies"}
+          to={PAGES.SAVED_MOVIES}
         >
           Сохранённые фильмы
         </Link>

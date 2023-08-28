@@ -12,6 +12,7 @@ import Navigation from "./Navigation/Navigation";
 import logoMovies from "../../images/logo.svg";
 // import profileIcon from "../../images/profile.svg";
 import profileIcon from "../../images/profile-icon.svg";
+import { PAGES } from "../../utils/const";
 
 function Header({ loggedIn, userData, signOut }) {
   // const [location, setLocation] = useState({ name: "", link: "" });
@@ -34,19 +35,19 @@ function Header({ loggedIn, userData, signOut }) {
   const profileMarkup = loggedIn ? (
     <Link
       className={`header__button header__profile ${
-        curentLocation.pathname === "/" ? "header__profile_main" : ""
+        curentLocation.pathname === PAGES.MAIN ? "header__profile_main" : ""
       }`}
-      to={"/profile"}
+      to={PAGES.PROFILE}
     >
       <span className=" header__profile-text">Аккаунт</span>
       <img className="header__profile-icon" src={profileIcon} alt="Аккаунт" />
     </Link>
   ) : (
     <>
-      <Link className="header__button header__register" to={"/signup"}>
+      <Link className="header__button header__register" to={PAGES.REGISTER}>
         Регистрация
       </Link>
-      <Link className="header__button header__login" to={"/signin"}>
+      <Link className="header__button header__login" to={PAGES.LOGIN}>
         Войти
       </Link>
     </>

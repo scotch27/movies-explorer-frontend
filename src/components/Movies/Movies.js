@@ -1,11 +1,17 @@
-import './Movies.css';
+import "./Movies.css";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 // Movies — компонент страницы с поиском по фильмам
 function Movies() {
   return (
-    <div className="Movies">
+    <>
+      <Header />
+      <div className="Movies">
         <h1>Movies</h1>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 
