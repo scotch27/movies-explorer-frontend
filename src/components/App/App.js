@@ -1,6 +1,5 @@
+import { Route, Routes} from "react-router-dom";
 import './App.css';
-
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
