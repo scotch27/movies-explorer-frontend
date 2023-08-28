@@ -53,13 +53,18 @@ function Header({ loggedIn, userData, signOut }) {
   );
 
   return (
-    <section className="header">
+    <section
+      className={`header ${
+        curentLocation.pathname === "/" ? "header__main" : ""
+      }`}
+    >
       <div className="header__container">
         <Link className="header__logo" to={"/"}>
           <img src={logoMovies} alt="Логотип" className="" />
         </Link>
-
-        {/* {loggedIn && <Navigation />} */}
+        {loggedIn && (
+          <Navigation isMainPage={curentLocation.pathname === "/"} />
+        )}
         <div className="header__wrapper">{profileMarkup}</div>
       </div>
     </section>
