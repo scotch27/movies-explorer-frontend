@@ -7,8 +7,9 @@
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 0px;
-  color: #A0A0A0;
+  color: #a0a0a0;
 }
+
 .portfolio__list {
   margin: 30px 0;
   padding: 0;
@@ -35,4 +36,44 @@
 
 .portfolio__link:hover {
   opacity: 0.7;
+}
+
+@media screen and (max-width: 1000px) {
+  .portfolio {
+    padding: 0 50px 38px;
+  }
+
+  .portfolio__item {
+    padding: 20px 5px 19px 0;
+  }
+
+  .portfolio__link {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .portfolio {
+    padding: 0 14px 38px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+  }
+
+  .portfolio__list {
+    margin: 22px 0;
+    padding: 0;
+  }
+
+  .portfolio__item {
+    padding: 20px 5px 19px 0;
+  }
+
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+    background: url("../../../images/arrow-small.svg") no-repeat;
+    background-position: center right;
+  }
 }
