@@ -4,10 +4,10 @@ import "./SavedMovies.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function SavedMovies() {
+function SavedMovies({loggedIn}) {
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <div className="SavedMovies">
         <h1>SavedMovies</h1>
       </div>

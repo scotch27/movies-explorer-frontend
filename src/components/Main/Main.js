@@ -9,10 +9,10 @@ import Techs from "./Techs/Techs";
 import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
 
-function Main() {
+function Main({loggedIn}) {
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <div className="main">
         <Promo />
         <AboutProject />

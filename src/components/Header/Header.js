@@ -18,8 +18,7 @@ function Header({ loggedIn, userData, signOut }) {
   // const [location, setLocation] = useState({ name: "", link: "" });
 
   const curentLocation = useLocation();
-
-  loggedIn = true;
+  
   // console.log(curentLocation.pathname);
 
   // React.useEffect(() => {
