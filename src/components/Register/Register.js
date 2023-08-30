@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
-import "./Register.css";
 import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
 import { PAGES } from "../../utils/const";

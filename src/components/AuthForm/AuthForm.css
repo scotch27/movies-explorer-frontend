@@ -2,6 +2,8 @@
   max-width: 396px;
   padding: 70px 0;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .auth-form__title {
@@ -10,15 +12,15 @@
   line-height: 29px;
   letter-spacing: 0em;
   text-align: left;
-  margin: 37px 0;
+  margin: 37px 0 0;
 }
 
 .auth-form__input-container {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   margin: 40px 0;
   min-height: 260px;
+  padding: 0;
 }
 
 .auth-form__field {
@@ -33,7 +35,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* min-height: 45px; */
 }
 
 .auth-form__input {
@@ -90,7 +91,6 @@
   line-height: 17px;
   letter-spacing: 0em;
   text-align: center;
-  /* margin-top: auto; */
   height: 45px;
   border: none;
   background-color: #3456f3;
@@ -132,4 +132,44 @@
 
 .auth-form__link:hover {
   opacity: 0.7;
+}
+
+@media screen and (max-width: 1000px) {
+  .auth-form {
+    padding: 232px 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .auth-form {
+    padding: 56px 0;
+    align-items: center;
+  }
+
+  .auth-form__title {
+    margin: 47px 0 0;
+  }
+
+  .auth-form__input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 80px 0;
+    min-height: 308px;
+    width: 260px;
+  }
+
+  .auth-form__save-button {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .auth-form__footer {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .auth-form__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }
