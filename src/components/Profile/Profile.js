@@ -8,11 +8,12 @@ import Header from "../Header/Header";
 import useForm from "../../hooks/useForm";
 
 function Profile({ loggedIn, signOut}) {
+  const formName = "profileForm";
   const profileName = "name";
   const profileEmail = "email";
 
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, errors, handleChange, isFormValid, resetForm } = useForm();
+  const { values, errors, handleChange, isFormValid, resetForm } = useForm(formName);
 
   useEffect(() => {
     if (currentUser) {
@@ -25,7 +26,7 @@ function Profile({ loggedIn, signOut}) {
       <Header loggedIn={loggedIn} />
       <section className="profile">
         <h2 className="profile__title">Привет, {currentUser.name}!</h2>
-        <form className="profile__form" id="form">
+        <form className="profile__form" id={formName}>
           <div className="profile__input-containers">
             <div className="profile__input-container">
               <div className="profile__field">

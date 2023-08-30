@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-const useForm = () => {
+const useForm = (formName = "form") => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -9,7 +9,7 @@ const useForm = () => {
     const name = event.target.name;
     const value = event.target.value;
 
-    console.log( name + " - " + value);
+    console.log(name + " - " + value);
 
     setValues({
       ...values,
@@ -21,17 +21,17 @@ const useForm = () => {
       [name]: event.target.validationMessage,
     });
 
-    setIsFormValid(event.target.closest('#form').checkValidity());
+    setIsFormValid(event.target.closest(`#${formName}`).checkValidity());
   };
 
   // Сброс формы
   const resetForm = useCallback(
     (newValues = {}, newErrors = {}, newIsFormValid = false) => {
-        setValues(newValues);
+      setValues(newValues);
       setErrors(newErrors);
       setIsFormValid(newIsFormValid);
     },
-    [setValues, setErrors, setIsFormValid],
+    [setValues, setErrors, setIsFormValid]
   );
 
   return {
