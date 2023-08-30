@@ -1,6 +1,6 @@
 // Login — компонент страницы авторизации.
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
@@ -15,6 +15,7 @@ function Login() {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
+  const [errorApi, setErrorApi] = useState();
 
   const footerText = (
     <>
@@ -24,8 +25,6 @@ function Login() {
       </Link>
     </>
   );
-
-  const error = "При обновлении профиля произошла ошибка.";
 
   useEffect(() => {
     if (currentUser) {
@@ -37,6 +36,7 @@ function Login() {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
 
+    setErrorApi("Что-то пошло не так");
     console.log("handleSubmit Login");
   }
 
@@ -48,7 +48,7 @@ function Login() {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={error}
+      error={errorApi}
     >
       <label className="auth-form__field" htmlFor={loginEmail}>
         E-mail

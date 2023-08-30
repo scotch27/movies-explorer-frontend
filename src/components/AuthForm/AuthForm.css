@@ -78,6 +78,7 @@
   text-align: center;
   color: #ff004c;
   margin: 5px 0;
+  height: 12px;
 }
 .auth-form__button-container {
   display: flex;

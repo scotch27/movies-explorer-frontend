@@ -1,5 +1,5 @@
 // Register — компонент страницы регистрации.
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
@@ -15,6 +15,7 @@ function Register() {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
+  const [errorApi, setErrorApi] = useState();
 
   const footerText = (
     <>
@@ -24,8 +25,6 @@ function Register() {
       </Link>
     </>
   );
-
-  const error = "При обновлении профиля произошла ошибка.";
 
   useEffect(() => {
     if (currentUser) {
@@ -42,6 +41,7 @@ function Register() {
     //   name,
     //   about: description,
     // });
+    setErrorApi("Что-то пошло не так");
     console.log("handleSubmit Register");
   }
 
@@ -52,8 +52,8 @@ function Register() {
       buttonText="Зарегистрироваться"
       footerText={footerText}
       onSubmit={handleSubmit}
-      isFormValid ={isFormValid}
-      error={error}
+      isFormValid={isFormValid}
+      error={errorApi}
     >
       <label className="auth-form__field" htmlFor={registerName}>
         Имя
