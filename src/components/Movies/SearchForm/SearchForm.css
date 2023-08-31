@@ -1,11 +1,10 @@
 .search {
-  padding: 69px 70px 48px;
+  padding: 69px 70px 10px;
 }
 
 .search__form {
   display: flex;
   flex-direction: column;
-  /* background-color: yellow; */
   margin: 0;
   padding: 0;
 }
@@ -17,7 +16,6 @@
   border-bottom: 1px solid #e8e8e8;
   align-items: left;
   padding: 0 0 12px;
-  /* background-color: burlywood; */
 }
 
 .search__input {
@@ -66,7 +64,7 @@
   letter-spacing: 0px;
   text-align: left;
   color: #ff004c;
-  margin: 15px 0;
+  margin: 0;
   height: 30px;
 }
 
