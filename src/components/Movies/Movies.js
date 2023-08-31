@@ -1,15 +1,18 @@
 import "./Movies.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import SearchForm from "./SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 // Movies — компонент страницы с поиском по фильмам
-function Movies({loggedIn}) {
+function Movies({ loggedIn }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <div className="Movies">
-        <h1>Movies</h1>
-      </div>
+      <section className="movies">
+        <SearchForm />
+        <MoviesCardList />
+      </section>
       <Footer />
     </>
   );

@@ -18,7 +18,7 @@ function App() {
     name: "Виталий",
     email: "pochta@yandex.ru",
   });
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const signOut = () => {
     console.log("loggedIn!");
