@@ -6,11 +6,11 @@ import "./MoviesCardList.css";
 import Preloader from "../Preloader/Preloader";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ cardsfdf }) {
+function MoviesCardList({ cards }) {
   const [isLoading, setIsLoading] = useState(false);
   const [islimit, setIslimit] = useState(false);
 
-  const cards = undefined;
+//   const cards = undefined;
   function showMore() {
     console.log("showMore");
     setIslimit(true);

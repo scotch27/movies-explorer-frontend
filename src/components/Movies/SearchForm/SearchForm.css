@@ -129,7 +129,7 @@
 
 @media screen and (max-width: 1000px) {
   .search {
-    padding: 79px 30px 61px;
+    padding: 79px 30px 31px;
   }
 
   .search__filter {
@@ -142,7 +142,7 @@
 
 @media screen and (max-width: 500px) {
   .search {
-    padding: 83px 14px 61px;
+    padding: 83px 14px 10px;
   }
 
   /* .search__form {
@@ -166,7 +166,7 @@
   .search__filter {
     flex-direction: row-reverse;
     justify-content: center;
-    margin: 42px 0;
+    margin: 42px 0 25px;
     gap: 12px;
   }
 
