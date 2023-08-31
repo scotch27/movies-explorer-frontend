@@ -1,28 +1,32 @@
 // Navigation — компонент, который отвечает за меню навигации на сайте.
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navigation.css";
 import { PAGES } from "../../../utils/const";
 
-function Navigation({isMainPage}) {
-  const buttonClasses = `navigation__button ${
-    isMainPage === true ? "navigation__button-main" : ""
-  }`;
+function Navigation({ isMainPage }) {
+  const buttonClasses = (isActive) =>
+    `navigation__button ${isActive ? "navigation__button_active" : ""} ${
+      isMainPage === true ? "navigation__button-main" : ""
+    }`;
 
   return (
-    <div className="navigation">
-      <div className="navigation__container">
-        <Link className={`${buttonClasses} navigation__films`} to={PAGES.MOVIES}>
+    <section className="navigation">
+      <nav className="navigation__container">
+        <NavLink
+          to={PAGES.MOVIES}
+          className={({ isActive }) => buttonClasses(isActive)}
+        >
           Фильмы
-        </Link>
-        <Link
-          className={`${buttonClasses} navigation__myfilms`}
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => buttonClasses(isActive)}
           to={PAGES.SAVED_MOVIES}
         >
           Сохранённые фильмы
-        </Link>
-      </div>
-    </div>
+        </NavLink>
+      </nav>
+    </section>
   );
 }
 

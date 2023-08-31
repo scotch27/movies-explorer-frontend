@@ -20,6 +20,10 @@
   text-decoration: none;
 }
 
+.navigation__button_active{
+  text-decoration: underline;
+}
+
 .navigation__button-main{
     color: #ffffff;
 }
