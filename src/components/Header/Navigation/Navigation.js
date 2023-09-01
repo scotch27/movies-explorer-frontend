@@ -1,8 +1,9 @@
 // Navigation — компонент, который отвечает за меню навигации на сайте.
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Navigation.css";
 import { PAGES } from "../../../utils/const";
+import profileIcon from "../../../images/profile-icon.svg";
 
 function Navigation({ isMainPage }) {
   const buttonClasses = (isActive) =>
@@ -26,6 +27,21 @@ function Navigation({ isMainPage }) {
           Сохранённые фильмы
         </NavLink>
       </nav>
+      <div className="navigation__wrapper">
+        <Link
+          className={`navigation__button navigation__profile ${
+            isMainPage ? "navigation__profile_main" : ""
+          }`}
+          to={PAGES.PROFILE}
+        >
+          <span className="navigation__profile-text">Аккаунт</span>
+          <img
+            className="navigation__profile-icon"
+            src={profileIcon}
+            alt="Аккаунт"
+          />
+        </Link>
+      </div>
     </section>
   );
 }

@@ -12,7 +12,7 @@ import Portfolio from "./Portfolio/Portfolio";
 function Main({loggedIn}) {
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header loggedIn={loggedIn}  isMainPage = {true} />
       <div className="main">
         <Promo />
         <AboutProject />
