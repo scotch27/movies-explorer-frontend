@@ -77,6 +77,7 @@ function Login() {
           placeholder="Пароль"
           required
           minLength="8"
+          maxLength="30"
           onChange={handleChange}
           value={values[loginPassword] || ""}
         />

@@ -93,6 +93,7 @@ function Register() {
           placeholder="более 8 символов"
           required
           minLength="8"
+          maxLength="30"
           onChange={handleChange}
           value={values[registerPassword] || ""}
         />
