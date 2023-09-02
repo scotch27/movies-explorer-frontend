@@ -15,19 +15,15 @@ import { PAGES } from "../../utils/const";
 
 function Header({ loggedIn, classSfx }) {
   return (
-    <header className={`header ${classSfx ? `header__${classSfx}` : ""}`}>
+    <header className={`header ${classSfx ? `header_${classSfx}` : ""}`}>
       <div className="header__container">
         <Link className="header__logo" to={"/"}>
           <img src={logoMovies} alt="Логотип" />
         </Link>
         {loggedIn ? (
           <>
-            <div className="header__navigation">
-              <Navigation classSfx={classSfx} />
-            </div>
-            <div className="header__burger">
-              <Burger classSfx={classSfx} />
-            </div>
+            <Navigation classSfx={classSfx} />
+            <Burger classSfx={classSfx} />
           </>
         ) : (
           <nav className="header__wrapper">

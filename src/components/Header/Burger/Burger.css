@@ -1,3 +1,7 @@
+.burger{
+  display: none;
+}
+
 .burger__button {
   display: inherit;
   background-image: url(../../../images/menu.svg);
@@ -67,6 +71,12 @@
 
 .burger__close-button:hover {
   opacity: 0.7;
+}
+
+@media screen and (max-width: 1000px) {
+  .burger {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 500px) {

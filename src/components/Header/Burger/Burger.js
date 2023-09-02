@@ -16,7 +16,7 @@ function Burger({ classSfx }) {
   };
 
   return (
-    <>
+    <div className="burger">
       <button
         type="button"
         onClick={handleOpen}
@@ -36,7 +36,7 @@ function Burger({ classSfx }) {
         />
         <Navigation classSfx="burger" />
       </div>
-    </>
+    </ div>
   );
 }
 

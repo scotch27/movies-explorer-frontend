@@ -30,7 +30,6 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="app">
         <Routes>
           <Route path={PAGES.MAIN} element={<Main loggedIn={loggedIn} />} />
           <Route path={PAGES.LOGIN} element={<Login />} />
@@ -46,7 +45,6 @@ function App() {
           <Route path={PAGES.PROFILE} element={<Profile signOut={signOut} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </div>
     </CurrentUserContext.Provider>
   );
 }
