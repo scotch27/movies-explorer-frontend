@@ -5,15 +5,18 @@ import "./Navigation.css";
 import { PAGES } from "../../../utils/const";
 import profileIcon from "../../../images/profile-icon.svg";
 
-function Navigation({ isMainPage }) {
+function Navigation({ classSfx }) {
+  const addClassName = (className) =>
+    className + (classSfx ? ` ${className}_${classSfx}` : "");
+
   const buttonClasses = (isActive) =>
-    `navigation__button ${isActive ? "navigation__button_active" : ""} ${
-      isMainPage === true ? "navigation__button-main" : ""
+    `${addClassName("navigation__button")} ${
+      isActive ? " navigation__button_active" : ""
     }`;
 
   return (
-    <section className="navigation">
-      <nav className="navigation__container">
+    <section className={addClassName("navigation")}>
+      <nav className={addClassName("navigation__container")}>
         <NavLink
           to={PAGES.MOVIES}
           className={({ isActive }) => buttonClasses(isActive)}
@@ -27,11 +30,11 @@ function Navigation({ isMainPage }) {
           Сохранённые фильмы
         </NavLink>
       </nav>
-      <div className="navigation__wrapper">
+      <div className={addClassName("navigation__wrapper")}>
         <Link
-          className={`navigation__button navigation__profile ${
-            isMainPage ? "navigation__profile_main" : ""
-          }`}
+          className={
+            "navigation__button " + addClassName("navigation__profile")
+          }
           to={PAGES.PROFILE}
         >
           <span className="navigation__profile-text">Аккаунт</span>

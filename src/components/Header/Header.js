@@ -9,13 +9,11 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import Navigation from "./Navigation/Navigation";
+import Burger from "./Burger/Burger";
 import logoMovies from "../../images/logo.svg";
-import menuImage from "../../images/menu.svg";
-// import profileIcon from "../../images/profile.svg";
-import profileIcon from "../../images/profile-icon.svg";
 import { PAGES } from "../../utils/const";
 
-function Header({ loggedIn, userData, signOut, isMainPage = false }) {
+function Header({ loggedIn, userData, signOut, classSfx }) {
   // const [isMainPage, setIsMainPage] = useState();
 
   // const curentLocation = useLocation();
@@ -31,8 +29,7 @@ function Header({ loggedIn, userData, signOut, isMainPage = false }) {
   // }, [curentLocation]);
 
   return (
-    <section className={`header ${isMainPage ? "header__main" : ""}`}>
-      {console.log("isMainPage: " + isMainPage)}
+    <section className={`header ${classSfx ? `header__${classSfx}`: ""}`}>
       <div className="header__container">
         <Link className="header__logo" to={"/"}>
           <img src={logoMovies} alt="Логотип" className="" />
@@ -40,10 +37,10 @@ function Header({ loggedIn, userData, signOut, isMainPage = false }) {
         {loggedIn ? (
           <>
             <div className="header__navigation">
-              <Navigation isMainPage={isMainPage} />
+              <Navigation classSfx={classSfx} />
             </div>
             <div className="header__burger">
-              <button onClick={handleOpen} className="header__burger-button" />
+              <Burger classSfx={classSfx}/>
             </div>
           </>
         ) : (
