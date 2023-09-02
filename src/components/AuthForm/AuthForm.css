@@ -6,6 +6,10 @@
   flex-direction: column;
 }
 
+.auth-form__logo:hover {
+  opacity: 0.7;
+}
+
 .auth-form__title {
   font-size: 24px;
   font-weight: 500;

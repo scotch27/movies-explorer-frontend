@@ -14,13 +14,11 @@ import logoMovies from "../../images/logo.svg";
 import { PAGES } from "../../utils/const";
 
 function Header({ loggedIn, classSfx }) {
-
-
   return (
-    <header className={`header ${classSfx ? `header__${classSfx}`: ""}`}>
+    <header className={`header ${classSfx ? `header__${classSfx}` : ""}`}>
       <div className="header__container">
         <Link className="header__logo" to={"/"}>
-          <img src={logoMovies} alt="Логотип" className="" />
+          <img src={logoMovies} alt="Логотип" />
         </Link>
         {loggedIn ? (
           <>
@@ -28,7 +26,7 @@ function Header({ loggedIn, classSfx }) {
               <Navigation classSfx={classSfx} />
             </div>
             <div className="header__burger">
-              <Burger classSfx={classSfx}/>
+              <Burger classSfx={classSfx} />
             </div>
           </>
         ) : (

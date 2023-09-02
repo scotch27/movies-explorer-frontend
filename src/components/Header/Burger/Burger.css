@@ -31,7 +31,6 @@
   width: 100%;
   max-width: 520px;
   height: 100%;
-
   padding: 10px;
   box-sizing: border-box;
   transition: opacity 600ms, visibility 600ms;
@@ -64,6 +63,10 @@
   background: #000000;
   -webkit-mask-image: url(../../../images/close.svg);
   mask-image: url(../../../images/close.svg);
+}
+
+.burger__close-button:hover {
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 500px) {
