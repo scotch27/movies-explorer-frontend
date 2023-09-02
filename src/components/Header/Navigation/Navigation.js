@@ -15,7 +15,7 @@ function Navigation({ classSfx }) {
     }`;
 
   return (
-    <section className={addClassName("navigation")}>
+    <div className={addClassName("navigation")}>
       <nav className={addClassName("navigation__container")}>
       <NavLink
           to={PAGES.MAIN}
@@ -52,7 +52,7 @@ function Navigation({ classSfx }) {
           />
         </Link>
       </div>
-    </section>
+    </div>
   );
 }
 

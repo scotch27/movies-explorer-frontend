@@ -29,9 +29,9 @@ function SearchForm() {
 
 
   return (
-    <section className="search">
+    <div className="search">
       <form className="search__form" id={formName} onSubmit={handleSubmit}>
-          <div className="search__field" htmlFor={searchQuery}>
+          <label className="search__field" htmlFor={searchQuery}>
             <input
               name={searchQuery}
               className="search__input"
@@ -43,7 +43,7 @@ function SearchForm() {
               value={values[searchQuery] || ""}
             />
             <button className="search__button" type="submit">Найти</button>
-          </div>
+          </label>
         <div className="search__filter">
           <input
             name={searShortFilm}
@@ -59,7 +59,7 @@ function SearchForm() {
         </div>
       </form>
       <div className="search__error">{errors[searchQuery]}</div>
-    </section>
+    </div>
   );
 }
 

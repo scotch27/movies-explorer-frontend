@@ -32,7 +32,7 @@ function Header({ loggedIn, classSfx }) {
             </div>
           </>
         ) : (
-          <div className="header__wrapper">
+          <nav className="header__wrapper">
             <Link
               className="header__button header__register"
               to={PAGES.REGISTER}
@@ -42,7 +42,7 @@ function Header({ loggedIn, classSfx }) {
             <Link className="header__button header__login" to={PAGES.LOGIN}>
               Войти
             </Link>
-          </div>
+          </nav>
         )}
       </div>
     </header>
