@@ -8,7 +8,7 @@
   box-sizing: border-box;
   border: none;
   padding: 0;
-
+  cursor: pointer;
   width: 44px;
   height: 44px;
 }

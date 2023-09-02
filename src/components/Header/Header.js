@@ -17,7 +17,7 @@ function Header({ loggedIn, classSfx }) {
 
 
   return (
-    <section className={`header ${classSfx ? `header__${classSfx}`: ""}`}>
+    <header className={`header ${classSfx ? `header__${classSfx}`: ""}`}>
       <div className="header__container">
         <Link className="header__logo" to={"/"}>
           <img src={logoMovies} alt="Логотип" className="" />
@@ -45,7 +45,7 @@ function Header({ loggedIn, classSfx }) {
           </div>
         )}
       </div>
-    </section>
+    </header>
   );
 }
 

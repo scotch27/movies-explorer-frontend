@@ -9,10 +9,10 @@ function Movies({ loggedIn, cards }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <section className="movies">
+      <main className="movies">
         <SearchForm />
         <MoviesCardList cards={cards} />
-      </section>
+      </main>
       <Footer />
     </>
   );

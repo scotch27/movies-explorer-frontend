@@ -13,11 +13,11 @@ function AuthForm({
   error,
 }) {
   return (
-    <section className="auth-form">
+    <main className="auth-form">
       <Link className="auth-form__logo" to={"/"}>
         <img src={logoMovies} alt="Логотип" className="" />
       </Link>
-      <h2 className="auth-form__title">{title}</h2>
+      <h1 className="auth-form__title">{title}</h1>
       <form name={formName} id={formName} className="form" onSubmit={onSubmit}>
         <div className="auth-form__input-container">{children}</div>
 
@@ -35,7 +35,7 @@ function AuthForm({
           <div className="auth-form__footer">{footerText}</div>
         </div>
       </form>
-    </section>
+    </main>
   );
 }
 

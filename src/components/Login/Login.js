@@ -57,6 +57,7 @@ function Login() {
           className="auth-form__input"
           id={loginEmail}
           type="email"
+          placeholder="E-mail"
           required
           onChange={handleChange}
           value={values[loginEmail] || ""}
@@ -73,6 +74,7 @@ function Login() {
           }`}
           id={loginPassword}
           type="password"
+          placeholder="Пароль"
           required
           minLength="8"
           onChange={handleChange}

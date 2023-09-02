@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Navigation from "../Navigation/Navigation";
 import "./Burger.css";
@@ -15,18 +14,22 @@ function Burger({ classSfx }) {
     setIsOpen(false);
     console.log("Burger handleClose!");
   };
-  
+
   return (
     <>
       <button
+        type="button"
         onClick={handleOpen}
-        className={`burger__button ${classSfx ? `burger__button_${classSfx}`: ""}`}
+        className={`burger__button ${
+          classSfx ? `burger__button_${classSfx}` : ""
+        }`}
       />
       <div
         className={`burger__popup ${isOpen && "burger__popup_open"}`}
         id={`popup-burger`}
       >
         <button
+          type="button"
           className="burger__close-button"
           aria-label="Закрыть"
           onClick={handleClose}

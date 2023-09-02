@@ -38,7 +38,7 @@ function SearchForm() {
               id={searchQuery}
               type="text"
               placeholder="Фильм"
-              // required
+              required
               onChange={handleChange}
               value={values[searchQuery] || ""}
             />

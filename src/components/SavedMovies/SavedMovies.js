@@ -11,10 +11,10 @@ function SavedMovies({ loggedIn, cards }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <section className="movies">
+      <main className="movies">
         <SearchForm />
         <MoviesCardList cards={cards} type="saved" />
-      </section>
+      </main>
       <Footer />
     </>
   );

@@ -9,8 +9,8 @@ function NotFound() {
 
   console.log(navigate(-1));
   return (
-    <div className="notfound">
-      <h2 className="notfound__title">404</h2>
+    <main className="notfound">
+      <h1 className="notfound__title">404</h1>
       <p className="notfound__text">Страница не найдена</p>
       <Link
         onClick={() => navigate(-1)}
@@ -19,7 +19,7 @@ function NotFound() {
       >
         Назад
       </Link>
-    </div>
+    </main>
   );
 }
 

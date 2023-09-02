@@ -17,7 +17,6 @@ function Profile({ loggedIn, signOut }) {
   const [profileEditing, setProfileEditing] = useState(false);
   const [errorApi, setErrorApi] = useState();
 
-
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
@@ -34,7 +33,7 @@ function Profile({ loggedIn, signOut }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <section className="profile">
+      <main className="profile">
         <h2 className="profile__title">Привет, {currentUser.name}!</h2>
         <form className="profile__form" id={formName} onSubmit={handleSubmit}>
           <div className="profile__input-containers">
@@ -48,6 +47,7 @@ function Profile({ loggedIn, signOut }) {
                   className="profile__input"
                   id={profileName}
                   type="text"
+                  placeholder="от 2 до 30 символов"
                   required
                   minLength="2"
                   maxLength="30"
@@ -71,6 +71,7 @@ function Profile({ loggedIn, signOut }) {
                   className="profile__input"
                   id={profileEmail}
                   type="email"
+                  placeholder="E-mail"
                   required
                   onChange={handleChange}
                   value={values[profileEmail] || ""}
@@ -115,7 +116,7 @@ function Profile({ loggedIn, signOut }) {
             )}
           </div>
         </form>
-      </section>
+      </main>
     </>
   );
 }

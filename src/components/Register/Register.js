@@ -56,6 +56,7 @@ function Register() {
           className="auth-form__input"
           id={registerName}
           type="text"
+          placeholder="от 2 до 30 символов"
           required
           minLength="2"
           maxLength="30"
@@ -72,6 +73,7 @@ function Register() {
           className="auth-form__input"
           id={registerEmail}
           type="email"
+          placeholder="E-mail"
           required
           onChange={handleChange}
           value={values[registerEmail] || ""}
@@ -88,6 +90,7 @@ function Register() {
           }`}
           id={registerPassword}
           type="password"
+          placeholder="более 8 символов"
           required
           minLength="8"
           onChange={handleChange}
