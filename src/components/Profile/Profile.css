@@ -98,6 +98,10 @@
   background-color: #ffffff;
 }
 
+.profile__edit-button:hover{
+  opacity: 0.8;
+}
+
 .profile__save-button {
   font-size: 14px;
   font-weight: 500;
@@ -135,6 +139,10 @@
   cursor: pointer;
   margin: 14px auto 0;
   background-color: #ffffff;
+}
+
+.profile__logout:hover{
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 1000px) {

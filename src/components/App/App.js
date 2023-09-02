@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./App.css";
 import Main from "../Main/Main";
@@ -20,9 +20,12 @@ function App() {
   });
   const [loggedIn, setLoggedIn] = useState(true);
 
+  const navigate = useNavigate();
+
   const signOut = () => {
-    console.log("loggedIn!");
+    console.log("signOut");
     setLoggedIn(false);
+    navigate(PAGES.MAIN, { replace: true });
   };
 
   return (
