@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 
-function MoviesCard({ card }) {
-
+function MoviesCard({ card, type }) {
   const cardLikeButtonClassName = `card__like ${
     card.saved && "card__like_active"
   }`;
@@ -15,6 +14,9 @@ function MoviesCard({ card }) {
     console.log(card);
   }
 
+  function handleDeleteClick() {
+    console.log("Delete card");
+  }
 
   return (
     <li className="card">
@@ -30,12 +32,22 @@ function MoviesCard({ card }) {
       <div className="card__container">
         <div className="card__info">
           <h2 className="card__text">{card.nameRU}</h2>
-          <button
-            className={cardLikeButtonClassName}
-            type="button"
-            aria-label="Поставить лайк"
-            onClick={handleLikeClick}
-          />
+          {console.log(type)}
+          {type === "saved" ? (
+            <button
+              className="card__delete"
+              type="button"
+              aria-label="Поставить лайк"
+              onClick={handleDeleteClick}
+            />
+          ) : (
+            <button
+              className={cardLikeButtonClassName}
+              type="button"
+              aria-label="Поставить лайк"
+              onClick={handleLikeClick}
+            />
+          ) }
         </div>
         <div className="card__duration">{card.duration}</div>
       </div>

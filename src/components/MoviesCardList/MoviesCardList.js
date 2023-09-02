@@ -6,7 +6,7 @@ import "./MoviesCardList.css";
 import Preloader from "../Preloader/Preloader";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ cards }) {
+function MoviesCardList({ cards, type}) {
   const [isLoading, setIsLoading] = useState(false);
   const [islimit, setIslimit] = useState(false);
 
@@ -27,7 +27,7 @@ function MoviesCardList({ cards }) {
         <>
           <ul className="cards__list">
             {cards.map((card) => (
-              <MoviesCard key={card.id} card={card} />
+              <MoviesCard key={card.id} card={card}  type="saved" />
             ))}
           </ul>
           <div className="cards__button-container">

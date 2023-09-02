@@ -4,10 +4,8 @@ import Footer from "../Footer/Footer";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-import cards from "../../utils/initialCards";
-
 // Movies — компонент страницы с поиском по фильмам
-function Movies({ loggedIn }) {
+function Movies({ loggedIn, cards }) {
   return (
     <>
       <Header loggedIn={loggedIn} />

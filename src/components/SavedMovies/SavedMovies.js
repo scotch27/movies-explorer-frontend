@@ -1,16 +1,20 @@
-// SavedMovies — компонент страницы с сохранёнными карточками фильмов.
-
 import "./SavedMovies.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import SearchForm from "../Movies/SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function SavedMovies({loggedIn}) {
+// Movies — компонент страницы с поиском по фильмам
+function SavedMovies({ loggedIn, cards }) {
+  cards = cards.filter((element) => element.saved);
+
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <div className="SavedMovies">
-        <h1>SavedMovies</h1>
-      </div>
+      <section className="movies">
+        <SearchForm />
+        <MoviesCardList cards={cards} type="saved" />
+      </section>
       <Footer />
     </>
   );

@@ -6,7 +6,7 @@
 
 .cards__list {
   display: grid;
-  justify-content: center;
+  justify-content:flex-start;
   grid-template-columns: repeat(auto-fit, 270px);
   gap: 30px 20px;
   padding: 0;

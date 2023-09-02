@@ -12,6 +12,7 @@ import Register from "../Register/Register";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { PAGES } from "../../utils/const";
+import cards from "../../utils/initialCards";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -36,11 +37,11 @@ function App() {
           <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
             <Route
               path={PAGES.MOVIES}
-              element={<Movies loggedIn={loggedIn} />}
+              element={<Movies loggedIn={loggedIn} cards={cards} />}
             />
             <Route
               path={PAGES.SAVED_MOVIES}
-              element={<SavedMovies loggedIn={loggedIn} />}
+              element={<SavedMovies loggedIn={loggedIn} cards={cards}/>}
             />
             <Route
               path={PAGES.PROFILE}
