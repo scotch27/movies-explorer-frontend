@@ -1,12 +1,11 @@
 // MoviesCardList — компонент, который управляет отрисовкой карточек фильмов на страницу и их количеством.
 
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import "./MoviesCardList.css";
 import Preloader from "../Preloader/Preloader";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ cards, type}) {
+function MoviesCardList({ cards, type =""}) {
   const [isLoading, setIsLoading] = useState(false);
   const [islimit, setIslimit] = useState(false);
 
@@ -27,7 +26,7 @@ function MoviesCardList({ cards, type}) {
         <>
           <ul className="cards__list">
             {cards.map((card) => (
-              <MoviesCard key={card.id} card={card}  type="saved" />
+              <MoviesCard key={card.id} card={card}  type={type}/>
             ))}
           </ul>
           <div className="cards__button-container">

@@ -37,7 +37,7 @@ function MoviesCard({ card, type }) {
             <button
               className="card__delete"
               type="button"
-              aria-label="Поставить лайк"
+              aria-label="Удалить"
               onClick={handleDeleteClick}
             />
           ) : (

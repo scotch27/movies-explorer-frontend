@@ -2,11 +2,8 @@
   font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   max-width: 1280px;
-  /* min-width: 320px; */
   background-color: #ffffff;
   color: #000000;
-  /* -webkit-font-smoothing: antialiased; */
-  /* -moz-osx-font-smoothing: grayscale; */
   margin: 0 auto;
   box-sizing: border-box;
 }

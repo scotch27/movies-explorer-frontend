@@ -9,7 +9,7 @@ const useForm = (formName = "form") => {
     const name = event.target.name;
     const value = event.target.value;
 
-    console.log(name + " - " + value);
+    // console.log(name + " - " + value);
 
     setValues({
       ...values,

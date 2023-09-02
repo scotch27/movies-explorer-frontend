@@ -5,28 +5,16 @@
 предусмотреть в вёрстке, даже несмотря на то, что сама авторизация ещё не реализована.
 */
 
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import Navigation from "./Navigation/Navigation";
 import Burger from "./Burger/Burger";
 import logoMovies from "../../images/logo.svg";
 import { PAGES } from "../../utils/const";
 
-function Header({ loggedIn, userData, signOut, classSfx }) {
-  // const [isMainPage, setIsMainPage] = useState();
+function Header({ loggedIn, classSfx }) {
 
-  // const curentLocation = useLocation();
-
-  // console.log(curentLocation.pathname);
-
-  const handleOpen = () => {
-    console.log("handleOpen!");
-  };
-
-  // React.useEffect(() => {
-  //   setIsMainPage(curentLocation.pathname === PAGES.MAIN);
-  // }, [curentLocation]);
 
   return (
     <section className={`header ${classSfx ? `header__${classSfx}`: ""}`}>

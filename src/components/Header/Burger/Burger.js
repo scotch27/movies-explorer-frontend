@@ -4,7 +4,6 @@ import Navigation from "../Navigation/Navigation";
 import "./Burger.css";
 
 function Burger({ classSfx }) {
-  // console.log(curentLocation.pathname);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {

@@ -1,6 +1,5 @@
 // Profile — компонент страницы с профилем пользователя.
 
-// import React, { useEffect, useContext, useState } from 'react';
 import React, { useEffect, useState } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Profile.css";

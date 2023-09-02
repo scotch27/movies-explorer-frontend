@@ -1,7 +1,3 @@
-// Profile — компонент страницы с профилем пользователя.
-
-// import React, { useEffect, useContext, useState } from 'react';
-
 import { Link } from "react-router-dom";
 import "./AuthForm.css";
 import logoMovies from "../../images/logo.svg";
