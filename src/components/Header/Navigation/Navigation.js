@@ -17,6 +17,13 @@ function Navigation({ classSfx }) {
   return (
     <section className={addClassName("navigation")}>
       <nav className={addClassName("navigation__container")}>
+      <NavLink
+          to={PAGES.MAIN}
+          className={({ isActive }) => `navigation__button_home ${buttonClasses(isActive)}`}
+        >
+          Главная
+        </NavLink>
+
         <NavLink
           to={PAGES.MOVIES}
           className={({ isActive }) => buttonClasses(isActive)}
