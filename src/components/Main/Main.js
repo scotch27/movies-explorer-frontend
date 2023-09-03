@@ -13,13 +13,13 @@ function Main({loggedIn}) {
   return (
     <>
       <Header loggedIn={loggedIn}  classSfx="main" />
-      <div className="main">
+      <main className="main">
         <Promo />
         <AboutProject />
         <Techs />
         <AboutMe />
         <Portfolio />
-      </div>
+      </main>
       <Footer />
     </>
   );
