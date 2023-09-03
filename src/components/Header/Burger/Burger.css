@@ -1,0 +1,86 @@
+.burger{
+  display: none;
+}
+
+.burger__button {
+  display: inherit;
+  background-image: url(../../../images/menu.svg);
+  background-size: 100%;
+  background-position: center;
+  background-color: transparent;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+}
+
+.burger__button:hover {
+  opacity: 0.7;
+}
+
+.burger__button_main {
+  background: #ffffff;
+  -webkit-mask-image: url(../../../images/menu.svg);
+  mask-image: url(../../../images/menu.svg);
+}
+
+.burger__popup {
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: opacity 600ms, visibility 600ms;
+  z-index: 5;
+  display: none;
+  padding: 90px;
+}
+
+.burger__popup_open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.burger__close-button {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 22px;
+  right: 22px;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../../images/close.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  padding-right: 19px;
+  box-sizing: border-box;
+  background: #000000;
+  -webkit-mask-image: url(../../../images/close.svg);
+  mask-image: url(../../../images/close.svg);
+}
+
+.burger__close-button:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 1000px) {
+  .burger {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .burger__popup {
+    padding: 90px 10px;
+  }
+}
