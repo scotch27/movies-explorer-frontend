@@ -6,21 +6,20 @@ class Auth {
     this._headers = options.headers;
   }
 
-  register(name, email, password) {
+  register({ name, email, password }) {
     return this._request(`/signup`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({name, email, password }),
+      body: JSON.stringify({ name, email, password }),
     });
   }
 
-  authorize(email, password) {
+  authorize({email, password}) {
     return this._request(`/signin`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ email, password }),
-    })
-    .then((data) => {
+    }).then((data) => {
       if (data.token) {
         localStorage.setItem("jwt", data.token);
         return data;
@@ -35,13 +34,14 @@ class Auth {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
   }
 
   _handleResponse(res) {
     if (res.ok) {
       return res.json();
     }
+    res.json().then((data) => console.log(data));
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
@@ -56,7 +56,7 @@ const auth = new Auth({
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
   },
 });
 

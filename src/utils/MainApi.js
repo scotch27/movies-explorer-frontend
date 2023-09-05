@@ -1,6 +1,6 @@
 import { MAIN_API } from "./const";
 
-class Api {
+class MainApi {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -40,6 +40,7 @@ class Api {
   }
 
   getUserInfo() {
+    console.log()
     return this._request(`/users/me`, { headers: this._headers() });
   }
 
@@ -48,16 +49,6 @@ class Api {
       method: "PATCH",
       headers: this._headers(),
       body: JSON.stringify(userInfo),
-    });
-  }
-
-  setAvatar(avatarLink) {
-    return this._request(`/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers(),
-      body: JSON.stringify({
-        avatar: avatarLink,
-      }),
     });
   }
 
@@ -74,7 +65,7 @@ class Api {
   }
 }
 
-const api = new Api({
+const api = new MainApi({
   baseUrl: MAIN_API,
   headers: (() => {
     return {

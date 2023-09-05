@@ -7,7 +7,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
 import { PAGES } from "../../utils/const";
 
-function Login() {
+function Login({handleLogin}) {
   const formName = "login";
   const loginEmail = "email";
   const loginPassword = "password";
@@ -26,19 +26,22 @@ function Login() {
     </>
   );
 
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    
+    handleLogin(values);
+    // resetForm();
+
+    // setErrorApi("Что-то пошло не так");
+    // console.log("handleSubmit Login");
+  }
+
   useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);
     }
   }, [currentUser, resetForm]);
-
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-
-    setErrorApi("Что-то пошло не так");
-    console.log("handleSubmit Login");
-  }
 
   return (
     <AuthForm

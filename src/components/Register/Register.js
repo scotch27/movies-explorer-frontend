@@ -6,7 +6,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
 import { PAGES } from "../../utils/const";
 
-function Register() {
+function Register({ handleRegister }) {
   const formName = "register";
   const registerName = "name";
   const registerEmail = "email";
@@ -26,18 +26,18 @@ function Register() {
     </>
   );
 
+  const handleSubmit = (e) => {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    handleRegister(values);
+    // resetForm();
+  };
+
   useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);
     }
   }, [currentUser, resetForm]);
-
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-    setErrorApi("Что-то пошло не так");
-    console.log("handleSubmit Register");
-  }
 
   return (
     <AuthForm
