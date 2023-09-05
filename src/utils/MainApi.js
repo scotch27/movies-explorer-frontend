@@ -6,6 +6,34 @@ class MainApi {
     this._headers = options.headers;
   }
 
+  register({ name, email, password }) {
+    console.log({ name, email, password });
+    return this._request(`/signup`, {
+      method: "POST",
+      headers: this._headers(),
+      body: JSON.stringify({ name, email, password }),
+    });
+  }
+
+  authorize({ email, password }) {
+    return this._request(`/signin`, {
+      method: "POST",
+      headers: this._headers(),
+      body: JSON.stringify({ email, password }),
+    }).then((data) => {
+      if (data.token) {
+        localStorage.setItem("jwt", data.token);
+        return data;
+      }
+    });
+  }
+
+  checkToken(token) {
+    return this._request(`/users/me`, {
+      headers: this._headers(),
+    });
+  }
+
   getInitialCards() {
     return this._request(`/cards`, { headers: this._headers() });
   }
@@ -40,7 +68,7 @@ class MainApi {
   }
 
   getUserInfo() {
-    console.log()
+    console.log();
     return this._request(`/users/me`, { headers: this._headers() });
   }
 
@@ -56,6 +84,7 @@ class MainApi {
     if (res.ok) {
       return res.json();
     }
+    res.json().then((data) => console.log(data));
     // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
   }
@@ -67,12 +96,13 @@ class MainApi {
 
 const api = new MainApi({
   baseUrl: MAIN_API,
-  headers: (() => {
+  headers: () => {
     return {
-      authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
       "Content-Type": "application/json",
-    }
-  }),
+      Accept: "application/json",
+    };
+  },
 });
 
 export default api;

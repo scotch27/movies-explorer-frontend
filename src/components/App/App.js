@@ -13,7 +13,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { PAGES } from "../../utils/const";
 import cards from "../../utils/initialCards";
 import MainApi from "../../utils/MainApi";
-import auth from "../../utils/auth.js";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -35,8 +34,7 @@ function App() {
 
   const handleLogin = ({ email, password }) => {
     console.log({ email, password });
-    auth
-      .authorize({ email, password })
+    MainApi.authorize({ email, password })
       .then((data) => {
         if (data.token) {
           setUserData({ email: email });
@@ -54,8 +52,9 @@ function App() {
   };
 
   const handleRegister = ({ name, email, password }) => {
-    auth
-      .register(name, email, password)
+    
+    console.log({ name, email, password });
+    MainApi.register({name, email, password})
       .then((res) => {
         handleLogin({ email, password });
       })
@@ -71,8 +70,7 @@ function App() {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       // проверим токен
-      auth
-        .checkToken(jwt)
+      MainApi.checkToken(jwt)
         .then((res) => {
           if (res) {
             setUserData({ name: res.name, email: res.email });
