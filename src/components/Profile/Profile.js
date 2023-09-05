@@ -6,7 +6,7 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import useForm from "../../hooks/useForm";
 
-function Profile({ loggedIn, signOut }) {
+function Profile({ onUpdateUser, loggedIn, signOut }) {
   const formName = "profileForm";
   const profileName = "name";
   const profileEmail = "email";
@@ -20,8 +20,8 @@ function Profile({ loggedIn, signOut }) {
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-
-    setErrorApi("Ошибка при сохранении профиля");
+    onUpdateUser(values);
+    // setErrorApi("Ошибка при сохранении профиля");
   }
 
   useEffect(() => {

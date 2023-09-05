@@ -52,9 +52,7 @@ function App() {
   };
 
   const handleRegister = ({ name, email, password }) => {
-    
-    console.log({ name, email, password });
-    MainApi.register({name, email, password})
+    MainApi.register({ name, email, password })
       .then((res) => {
         handleLogin({ email, password });
       })
@@ -84,6 +82,14 @@ function App() {
         });
     }
   };
+
+  function handleUpdateUser(values) {
+    MainApi.setUserInfo(values)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch(console.error);
+  }
 
   useEffect(() => {
     tokenCheck();
@@ -123,7 +129,12 @@ function App() {
             path={PAGES.SAVED_MOVIES}
             element={<SavedMovies loggedIn={loggedIn} cards={cards} />}
           />
-          <Route path={PAGES.PROFILE} element={<Profile signOut={signOut} />} />
+          <Route
+            path={PAGES.PROFILE}
+            element={
+              <Profile signOut={signOut} onUpdateUser={handleUpdateUser} />
+            }
+          />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

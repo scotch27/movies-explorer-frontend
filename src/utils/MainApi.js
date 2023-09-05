@@ -34,8 +34,17 @@ class MainApi {
     });
   }
 
-  getInitialCards() {
-    return this._request(`/cards`, { headers: this._headers() });
+  getUserInfo() {
+    console.log();
+    return this._request(`/users/me`, { headers: this._headers() });
+  }
+
+  setUserInfo({name, email}) {
+    return this._request(`/users/me`, {
+      method: "PATCH",
+      headers: this._headers(),
+      body: JSON.stringify({name, email}),
+    });
   }
 
   setCard(data) {
@@ -64,19 +73,6 @@ class MainApi {
     return this._request(`/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers(),
-    });
-  }
-
-  getUserInfo() {
-    console.log();
-    return this._request(`/users/me`, { headers: this._headers() });
-  }
-
-  setUserInfo(userInfo) {
-    return this._request(`/users/me`, {
-      method: "PATCH",
-      headers: this._headers(),
-      body: JSON.stringify(userInfo),
     });
   }
 
