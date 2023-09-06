@@ -18,7 +18,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const [userData, setUserData] = useState({ name: "", email: "" });
   const [autchOk, setAutchOk] = useState(false);
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
 
@@ -27,7 +26,6 @@ function App() {
   const signOut = () => {
     console.log("signOut");
     localStorage.removeItem("jwt");
-    setUserData({});
     setLoggedIn(false);
     navigate(PAGES.MAIN, { replace: true });
   };
@@ -37,9 +35,7 @@ function App() {
     MainApi.authorize({ email, password })
       .then((data) => {
         if (data.token) {
-          setUserData({ email: email });
           setLoggedIn(true);
-          // navigate("/", { replace: true });
         } else {
           setAutchOk(false);
           setIsInfoToolTipOpen(true);
@@ -71,9 +67,7 @@ function App() {
       MainApi.checkToken(jwt)
         .then((res) => {
           if (res) {
-            setUserData({ name: res.name, email: res.email });
             setLoggedIn(true);
-            // navigate(PAGES.MOVIES, { replace: true });
           }
         })
         .catch((err) => {
@@ -132,7 +126,7 @@ function App() {
           <Route
             path={PAGES.PROFILE}
             element={
-              <Profile signOut={signOut} onUpdateUser={handleUpdateUser} />
+              <Profile loggedIn={loggedIn} signOut={signOut} onUpdateUser={handleUpdateUser} />
             }
           />
         </Route>
