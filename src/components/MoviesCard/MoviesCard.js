@@ -32,7 +32,6 @@ function MoviesCard({ card, type }) {
       <div className="card__container">
         <div className="card__info">
           <h2 className="card__text">{card.nameRU}</h2>
-          {console.log(type)}
           {type === "saved" ? (
             <button
               className="card__delete"

@@ -5,7 +5,7 @@ import CurrentUserContext from "../../../contexts/CurrentUserContext";
 import "./SearchForm.css";
 import useForm from "../../../hooks/useForm";
 
-function SearchForm() {
+function SearchForm({onSearchMovies}) {
   const formName = "searchForm";
   const searchQuery = "query";
   const searShortFilm = "shortFilm";
@@ -18,6 +18,8 @@ function SearchForm() {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
     console.log("SearchForm");
+    onSearchMovies();
+    
   }
 
   function handleCheckBox(e) {
@@ -29,7 +31,7 @@ function SearchForm() {
 
 
   return (
-    <div className="search">
+    <section className="search">
       <form className="search__form" id={formName} onSubmit={handleSubmit}>
           <label className="search__field" htmlFor={searchQuery}>
             <input
@@ -59,7 +61,7 @@ function SearchForm() {
         </div>
       </form>
       <div className="search__error">{errors[searchQuery]}</div>
-    </div>
+    </section>
   );
 }
 
