@@ -10,3 +10,5 @@ export const PAGES = {
   MOVIES: "/movies",
   SAVED_MOVIES: "/saved-movies",
 };
+
+export const ERROR_MESSAGE_EMPTY_REQUEST = "Нужно ввести ключевое слово";

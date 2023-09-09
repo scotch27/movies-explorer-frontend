@@ -1,66 +1,86 @@
 // SearchForm — форма поиска, куда пользователь будет вводить запрос.
 
 import React, { useEffect, useState } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
 import "./SearchForm.css";
-import useForm from "../../../hooks/useForm";
+import { ERROR_MESSAGE_EMPTY_REQUEST } from "../../../utils/const";
 
-function SearchForm({onSearchMovies}) {
+function SearchForm({ onSearchMovies, data }) {
   const formName = "searchForm";
-  const searchQuery = "query";
-  const searShortFilm = "shortFilm";
 
-  const currentUser = React.useContext(CurrentUserContext);
-  const { values, errors, handleChange, isFormValid, resetForm } =
-    useForm(formName);
+  const [query, setQuery] = React.useState("");
+  const [isShortFilm, setIsShortFilm] = React.useState(false);
+  const [isSubmit, setIsSubmit] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+
+  function handleChangeQuery(e) {
+    setQuery(e.target.value);
+  }
+
+  function handleCheckIsShortFilm(e) {
+    setIsShortFilm(!isShortFilm);
+    setIsSubmit(true);
+  }
 
   function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    console.log("SearchForm");
-    onSearchMovies();
-    
+    setIsSubmit(true);
   }
 
-  function handleCheckBox(e) {
-    
-    console.log("handleCheckBox");
-    // onCheckBoxClicked(movieName, e.target.checked);
-    // setIsShortFilm(e.target.checked);
-  }
+  useEffect(() => {
+    if (data) {
+      setQuery(data.query ? data.query : query);
+      setIsShortFilm(data.isShortFilm ? data.isShortFilm : isShortFilm);
+    }
+  }, []);
 
+  useEffect(() => {
+    if (isSubmit === true) {
+      setIsSubmit(false);
+      if (query.length === 0) {
+        setMessage(ERROR_MESSAGE_EMPTY_REQUEST);
+        return;
+      }
+      setMessage("");
+      onSearchMovies({ query, isShortFilm });
+    }
+  }, [isSubmit]);
 
   return (
     <section className="search">
-      <form className="search__form" id={formName} onSubmit={handleSubmit}>
-          <label className="search__field" htmlFor={searchQuery}>
-            <input
-              name={searchQuery}
-              className="search__input"
-              id={searchQuery}
-              type="text"
-              placeholder="Фильм"
-              required
-              onChange={handleChange}
-              value={values[searchQuery] || ""}
-            />
-            <button className="search__button" type="submit">Найти</button>
-          </label>
+      <form
+        className="search__form"
+        id={formName}
+        onSubmit={handleSubmit}
+        noValidate={true}
+      >
+        <label className="search__field" htmlFor="query">
+          <input
+            name="query"
+            className="search__input"
+            id="query"
+            type="text"
+            placeholder="Фильм"
+            required
+            onChange={handleChangeQuery}
+            value={query}
+          />
+          <button className="search__button" type="submit">
+            Найти
+          </button>
+        </label>
         <div className="search__filter">
           <input
-            name={searShortFilm}
-            id={searShortFilm}
+            name="isShortFilm"
+            id="isShortFilm"
             className="search__filter-checkbox"
             type="checkbox"
-            onChange={handleCheckBox}
-            checked={values[searShortFilm]}
+            onChange={handleCheckIsShortFilm}
+            checked={isShortFilm}
           ></input>
-          <span className="search__filter-text">
-            Короткометражки
-          </span>
+          <span className="search__filter-text">Короткометражки</span>
         </div>
       </form>
-      <div className="search__error">{errors[searchQuery]}</div>
+      <div className="search__error">{message}</div>
     </section>
   );
 }
