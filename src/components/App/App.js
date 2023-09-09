@@ -25,7 +25,8 @@ function App() {
 
   const signOut = () => {
     console.log("signOut");
-    localStorage.removeItem("jwt");
+    // localStorage.removeItem("jwt");
+    localStorage.clear();
     setLoggedIn(false);
     navigate(PAGES.MAIN, { replace: true });
   };

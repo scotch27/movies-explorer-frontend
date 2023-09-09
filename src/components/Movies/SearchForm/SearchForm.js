@@ -4,20 +4,20 @@ import React, { useEffect, useState } from "react";
 import "./SearchForm.css";
 import { ERROR_MESSAGE_EMPTY_REQUEST } from "../../../utils/const";
 
-function SearchForm({ onSearchMovies, data }) {
+function SearchForm({ onSearchMovies, searchParams }) {
   const formName = "searchForm";
 
-  const [query, setQuery] = React.useState("");
-  const [isShortFilm, setIsShortFilm] = React.useState(false);
-  const [isSubmit, setIsSubmit] = React.useState(false);
-  const [message, setMessage] = React.useState("");
+  const [query, setQuery] = useState("");
+  const [isShortMovies, setIsShortMovies] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [message, setMessage] = useState("");
 
   function handleChangeQuery(e) {
     setQuery(e.target.value);
   }
 
-  function handleCheckIsShortFilm(e) {
-    setIsShortFilm(!isShortFilm);
+  function handleCheckIsShortMovies(e) {
+    setIsShortMovies(!isShortMovies);
     setIsSubmit(true);
   }
 
@@ -27,9 +27,13 @@ function SearchForm({ onSearchMovies, data }) {
   }
 
   useEffect(() => {
-    if (data) {
-      setQuery(data.query ? data.query : query);
-      setIsShortFilm(data.isShortFilm ? data.isShortFilm : isShortFilm);
+    console.log(searchParams);
+    if (!searchParams) return;
+    if (searchParams.isShortMovies)
+      setIsShortMovies(searchParams.isShortMovies);
+    if (searchParams.query) {
+      setQuery(searchParams.query);
+      setIsSubmit(true);
     }
   }, []);
 
@@ -41,7 +45,7 @@ function SearchForm({ onSearchMovies, data }) {
         return;
       }
       setMessage("");
-      onSearchMovies({ query, isShortFilm });
+      onSearchMovies({ query, isShortMovies });
     }
   }, [isSubmit]);
 
@@ -70,12 +74,12 @@ function SearchForm({ onSearchMovies, data }) {
         </label>
         <div className="search__filter">
           <input
-            name="isShortFilm"
-            id="isShortFilm"
+            name="isShortMovies"
+            id="isShortMovies"
             className="search__filter-checkbox"
             type="checkbox"
-            onChange={handleCheckIsShortFilm}
-            checked={isShortFilm}
+            onChange={handleCheckIsShortMovies}
+            checked={isShortMovies}
           ></input>
           <span className="search__filter-text">Короткометражки</span>
         </div>
