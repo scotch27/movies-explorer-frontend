@@ -31,7 +31,6 @@ class MainApi extends Api {
   }
 
   getUserInfo() {
-    console.log();
     return this._request(`/users/me`, { headers: this._headers() });
   }
 
@@ -43,37 +42,29 @@ class MainApi extends Api {
     });
   }
 
-  setCard(data) {
-    return this._request(`/cards`, {
+  // Movies
+
+  getMovies() {
+    return this._request(`/movies`, { headers: this._headers() });
+  }
+
+  setMovie(data) {
+    return this._request(`/movies`, {
       method: "POST",
       headers: this._headers(),
       body: JSON.stringify(data),
     });
   }
 
-  deleteCard(cardId) {
-    return this._request(`/cards/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers(),
-    });
-  }
-
-  likeCard(cardId) {
-    return this._request(`/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this._headers(),
-    });
-  }
-
-  dislikeCard(cardId) {
-    return this._request(`/cards/${cardId}/likes`, {
+  deleteMovie(cardId) {
+    return this._request(`/movies/${cardId}`, {
       method: "DELETE",
       headers: this._headers(),
     });
   }
 }
 
-const api = new MainApi({
+const mainApi = new MainApi({
   baseUrl: MAIN_API,
   headers: () => {
     return {
@@ -84,4 +75,4 @@ const api = new MainApi({
   },
 });
 
-export default api;
+export default mainApi;

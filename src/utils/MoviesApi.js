@@ -7,7 +7,7 @@ class MoviesApi extends Api {
   }
 }
 
-const api = new MoviesApi({
+const moviesApi = new MoviesApi({
   baseUrl: MOVIES_API,
   headers: () => ({
       "Content-Type": "application/json",
@@ -15,4 +15,4 @@ const api = new MoviesApi({
     })
 });
 
-export default api;
+export default moviesApi;
