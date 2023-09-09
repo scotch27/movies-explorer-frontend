@@ -11,4 +11,6 @@ export const PAGES = {
   SAVED_MOVIES: "/saved-movies",
 };
 
+export const SHORT_MOVIES_DURATION = 40;
+
 export const ERROR_MESSAGE_EMPTY_REQUEST = "Нужно ввести ключевое слово";

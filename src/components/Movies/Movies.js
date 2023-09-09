@@ -6,6 +6,7 @@ import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
+import { searchMovies } from "../../utils/utils";
 
 // Movies — компонент страницы с поиском по фильмам
 function Movies({ loggedIn, cards }) {
@@ -14,14 +15,18 @@ function Movies({ loggedIn, cards }) {
     isShortMovies: (localStorage.getItem("isShortMovies")==="true"),
   });
 
+  const [movies, setMovies] = useState([]);
+
   const onSearchMovies = ({ query, isShortMovies }) => {
-    console.log("onSearchMovies");
     console.log(searchParams);
 
     localStorage.setItem("query", query);
     localStorage.setItem("isShortMovies", isShortMovies);
+
     moviesApi
       .getMovies()
+      .then((res) => searchMovies(res, query, isShortMovies))
+      .then((res) => setMovies(res))
       .then((res) => console.log(res))
       .catch(console.error);
   };
@@ -31,7 +36,7 @@ function Movies({ loggedIn, cards }) {
       <Header loggedIn={loggedIn} />
       <main className="movies">
         <SearchForm onSearchMovies={onSearchMovies} searchParams={searchParams} />
-        <MoviesCardList cards={cards} />
+        <MoviesCardList cards={movies} />
       </main>
       <Footer />
     </>

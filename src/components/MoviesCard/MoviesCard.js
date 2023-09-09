@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
+import { MOVIES_API } from "../../utils/const";
+import { durationToString } from "../../utils/utils";
 
 function MoviesCard({ card, type }) {
   const cardLikeButtonClassName = `card__like ${
@@ -21,12 +23,16 @@ function MoviesCard({ card, type }) {
   return (
     <li className="card">
       <a
-        href={card.image}
+        href={card.trailerLink}
         className="card__link"
         target="_blank"
         rel="noreferrer"
       >
-        <img className="card__image" alt={card.nameRU} src={card.image} />
+        <img
+          className="card__image"
+          alt={card.nameRU}
+          src={MOVIES_API + card.image.url}
+        />
       </a>
 
       <div className="card__container">
@@ -46,9 +52,9 @@ function MoviesCard({ card, type }) {
               aria-label="Поставить лайк"
               onClick={handleLikeClick}
             />
-          ) }
+          )}
         </div>
-        <div className="card__duration">{card.duration}</div>
+        <div className="card__duration">{durationToString(card.duration)}</div>
       </div>
     </li>
   );
