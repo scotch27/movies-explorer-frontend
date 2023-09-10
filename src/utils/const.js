@@ -14,3 +14,5 @@ export const PAGES = {
 export const SHORT_MOVIES_DURATION = 40;
 
 export const ERROR_MESSAGE_EMPTY_REQUEST = "Нужно ввести ключевое слово";
+export const ERROR_MESSAGE_NOT_FOUND = "Ничего не найдено";
+export const ERROR_MESSAGE_SEARCH_RESULT = "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз";

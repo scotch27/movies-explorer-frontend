@@ -6,26 +6,16 @@
 
 import React, { useEffect, useState } from "react";
 import "./MoviesCardList.css";
-import Preloader from "../Preloader/Preloader";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({
-  cards,
-  type = "",
-  showAll = false,
-  onSaveCard,
-  onDeleteCard,
-}) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showCards, setShowCards] = useState([]);
+function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
   const [showCardsCount, setShowCardsCount] = useState(getInitialCardCount());
-  const [islimit, setIslimit] = useState(false);
 
   //   const cards = undefined;
   function showMore() {
     setShowCardsCount(showCardsCount + getShowMoreCardCount());
     console.log("showMore");
-    setIslimit(true);
+    // setIslimit(true);
   }
 
   function getInitialCardCount() {
@@ -47,68 +37,39 @@ function MoviesCardList({
   }
 
   useEffect(() => {
-    if (!showAll) {
+    if (!isSaved) {
       function handleResize() {
-        let length = getInitialCardCount();
-        setShowCardsCount(length);
+        setShowCardsCount(getInitialCardCount());
       }
 
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
   });
 
-    // setShowCards(cards.slice(showCardsCount));
-  //   if(showAll){
-
-  //   }
-    
-  //     // function handleResize() {
-  //     //   let length = getInitialCardCount();
-  //     //   if (cardLength.length !== length) setCardLength(length);
-  //     // }
-
-  //     // window.addEventListener('resize', handleResize);
-  //     // return () => window.removeEventListener('resize', handleResize);
-    
-  // });
-
   return (
     <section className="cards">
-      {isLoading && <Preloader />}
-      {cards === undefined || cards.length === 0 ? (
-        <div className="cards__error-container">
-          <div className="cards__error">Ничего не найдено</div>
-        </div>
-      ) : (
-        <>
-          <ul className="cards__list">
-            {console.log("Length " + showCardsCount)}
-            {cards.slice(0, showCardsCount).map((card) => (
-              <MoviesCard
-                key={card.movieId}
-                card={card}
-                type={type}
-                onSaveCard={onSaveCard}
-                onDeleteCard={onDeleteCard}
-              />
-            ))}
-          </ul>
-          {}
+      <>
+        <ul className="cards__list">
+          {console.log("Length " + showCardsCount)}
+          {(isSaved ? cards : cards.slice(0, showCardsCount)).map((card) => (
+            <MoviesCard
+              key={card.movieId}
+              card={card}
+              isSaved={isSaved}
+              onSaveCard={onSaveCard}
+              onDeleteCard={onDeleteCard}
+            />
+          ))}
+        </ul>
+        {!isSaved && showCardsCount < cards.length && (
           <div className="cards__button-container">
-            <button
-              type="button"
-              disabled={islimit ? true : false}
-              className={`cards__button ${
-                islimit ? "cards__button_inactive" : ""
-              }`}
-              onClick={showMore}
-            >
+            <button type="button" className="cards__button" onClick={showMore}>
               Ещё
             </button>
           </div>
-        </>
-      )}
+        )}
+      </>
     </section>
   );
 }

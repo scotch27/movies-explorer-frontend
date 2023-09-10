@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 import { durationToString } from "../../utils/utils";
 
-function MoviesCard({ card, type, onSaveCard, onDeleteCard }) {
+function MoviesCard({ card, isSaved, onSaveCard, onDeleteCard }) {
   const cardLikeButtonClassName = `card__like ${
     card._id && "card__like_active"
   }`;
@@ -37,7 +37,7 @@ function MoviesCard({ card, type, onSaveCard, onDeleteCard }) {
       <div className="card__container">
         <div className="card__info">
           <h2 className="card__text">{card.nameRU}</h2>
-          {type === "saved" ? (
+          {isSaved ? (
             <button
               className="card__delete"
               type="button"

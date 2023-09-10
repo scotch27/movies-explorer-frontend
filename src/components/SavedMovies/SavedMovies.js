@@ -2,37 +2,41 @@ import React, { useEffect, useState } from "react";
 import "./SavedMovies.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { searchMovies, movieToCard } from "../../utils/utils";
+import { ERROR_MESSAGE_NOT_FOUND } from "../../utils/const";
 
 // Movies — компонент страницы с поиском по фильмам
 function SavedMovies({ loggedIn, savedCards, onDeleteCard }) {
   const [movies, setMovies] = useState([]);
-  const [request, setRequest] = useState({});
+  const [searchParams, setSearchParams] = useState({});
+  const [errorMessage, setErrorMessage] = useState(false);
 
   function onSearchMovies({ query, isShortMovies }) {
-    console.log(query);
-    console.log(isShortMovies);
-    console.log(savedCards);
-
-    setRequest({ query, isShortMovies });
+    setErrorMessage("");
+    setSearchParams({ query, isShortMovies });
 
     let movies = searchMovies(savedCards, query, isShortMovies);
     setMovies(movies);
-    // console.log(movies);
+    if (movies.length === 0) setErrorMessage(ERROR_MESSAGE_NOT_FOUND);
   }
 
   useEffect(() => {
-    console.log("useEffect [] SavedMovies");
+    // console.log("useEffect [] SavedMovies");
     setMovies(savedCards);
   }, []);
 
   useEffect(() => {
-    console.log("useEffect [cards] SavedMovies");
+    // console.log("useEffect [cards] SavedMovies");
     setMovies(
-      request.query
-        ? searchMovies(savedCards, request.query, request.isShortMovies)
+      searchParams.query
+        ? searchMovies(
+            savedCards,
+            searchParams.query,
+            searchParams.isShortMovies
+          )
         : savedCards
     );
   }, [savedCards]);
@@ -40,13 +44,17 @@ function SavedMovies({ loggedIn, savedCards, onDeleteCard }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <main className="movies">
+      <main className="saved-movies">
         <SearchForm onSearchMovies={onSearchMovies} />
-        <MoviesCardList
-          cards={movies}
-          type="saved"
-          onDeleteCard={onDeleteCard}
-        />
+        {errorMessage ? (
+          <ErrorMessage message={errorMessage} />
+        ) : (
+          <MoviesCardList
+            cards={movies}
+            isSaved={true}
+            onDeleteCard={onDeleteCard}
+          />
+        )}
       </main>
       <Footer />
     </>
