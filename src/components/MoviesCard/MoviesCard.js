@@ -7,7 +7,7 @@ import { durationToString } from "../../utils/utils";
 
 function MoviesCard({ card, type, onSaveCard, onDeleteCard }) {
   const cardLikeButtonClassName = `card__like ${
-    card.saved && "card__like_active"
+    card._id && "card__like_active"
   }`;
 
   function handleLikeClick(e) {
@@ -49,7 +49,7 @@ function MoviesCard({ card, type, onSaveCard, onDeleteCard }) {
               className={cardLikeButtonClassName}
               type="button"
               aria-label="Поставить лайк"
-              onClick={handleLikeClick}
+              onClick={card._id ? handleDeleteClick : handleLikeClick}
             />
           )}
         </div>

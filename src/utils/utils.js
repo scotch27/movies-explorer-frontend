@@ -35,13 +35,13 @@ export function movieToCard(movie, SavedMovies = []) {
     movieId: movie.id,
     nameRU: movie.nameRU,
     nameEN: movie.nameEN,
-    saved: isSaved(movie.id, SavedMovies),
+    _id: getSavedId(movie.id, SavedMovies),
   };
 
-  function isSaved(id, data) {
+  function getSavedId(id, data) {
     for (let item in data) {
-      if (data[item].movieId === id) return true;
+      if (data[item].movieId === id) return data[item]._id;
     }
-    return false;
+    return null;
   }
 }

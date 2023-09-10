@@ -73,6 +73,8 @@ function App() {
         .checkToken(jwt)
         .then((res) => {
           if (res) {
+            setCurrentUser({ ...res });
+            // console.log(res);
             setLoggedIn(true);
           }
         })
@@ -93,42 +95,28 @@ function App() {
   }
 
   function handleSaveCard(card) {
-    console.log("handleSaveCard");
-    console.log(card);
+    // console.log("handleSaveCard");
+    // console.log(card);
+
     mainApi
       .setMovie(card)
-      .then((res) => {
-        console.log(res);
+      .then((newCard) => {
+        setSavedCards([newCard, ...savedCards]);
       })
       .catch(console.error);
-
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    // // // Отправляем запрос в API и получаем обновлённые данные карточки
-    // (isLiked ? api.dislikeCard(card._id) : api.likeCard(card._id))
-    //   .then((newCard) => {
-    //     setCards((state) =>
-    //       state.map((c) => (c._id === card._id ? newCard : c))
-    //     );
-    //   })
-    //   .catch(console.error);
   }
 
   function onDeleteCard(card) {
-    console.log("onDeleteCard");
-    console.log(card);
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    // // // Отправляем запрос в API и получаем обновлённые данные карточки
-    // (isLiked ? api.dislikeCard(card._id) : api.likeCard(card._id))
-    //   .then((newCard) => {
-    //     setCards((state) =>
-    //       state.map((c) => (c._id === card._id ? newCard : c))
-    //     );
-    //   })
-    //   .catch(console.error);
+    // console.log("onDeleteCard");
+    // console.log(card);
+    mainApi
+      .deleteMovie(card._id)
+      .then(() => {
+        setSavedCards((newArray) =>
+          newArray.filter((item) => card._id !== item._id)
+        );
+      })
+      .catch(console.error);
   }
 
   useEffect(() => {
@@ -137,9 +125,9 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
+      mainApi
+        .getMovies()
+        .then((cards) => {
           console.log(cards);
           setSavedCards(cards);
         })
@@ -176,7 +164,13 @@ function App() {
           />
           <Route
             path={PAGES.SAVED_MOVIES}
-            element={<SavedMovies loggedIn={loggedIn} cards={savedCards} />}
+            element={
+              <SavedMovies
+                loggedIn={loggedIn}
+                onDeleteCard={onDeleteCard}
+                savedCards={savedCards}
+              />
+            }
           />
           <Route
             path={PAGES.PROFILE}

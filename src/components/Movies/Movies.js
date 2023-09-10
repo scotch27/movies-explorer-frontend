@@ -42,7 +42,7 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
     console.log("useEffect ");
     console.log(movies);
     if(movies) setMovies(movies.map((movie) => movieToCard(movie, savedCards)));
-  }, []);
+  }, [savedCards]);
 
   return (
     <>
