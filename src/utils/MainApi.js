@@ -34,11 +34,11 @@ class MainApi extends Api {
     return this._request(`/users/me`, { headers: this._headers() });
   }
 
-  setUserInfo({name, email}) {
+  setUserInfo({ name, email }) {
     return this._request(`/users/me`, {
       method: "PATCH",
       headers: this._headers(),
-      body: JSON.stringify({name, email}),
+      body: JSON.stringify({ name, email }),
     });
   }
 
@@ -48,11 +48,24 @@ class MainApi extends Api {
     return this._request(`/movies`, { headers: this._headers() });
   }
 
-  setMovie(data) {
+  setMovie(card) {
+    // console.log(card);
     return this._request(`/movies`, {
       method: "POST",
       headers: this._headers(),
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        country: card.country,
+        director: card.director,
+        duration: card.duration,
+        year: card.year,
+        description: card.description,
+        image: card.image,
+        trailerLink: card.trailerLink,
+        thumbnail: card.thumbnail,
+        movieId: card.movieId,
+        nameRU: card.nameRU,
+        nameEN: card.nameEN,
+      }),
     });
   }
 

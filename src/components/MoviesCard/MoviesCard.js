@@ -3,21 +3,20 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
-import { MOVIES_API } from "../../utils/const";
 import { durationToString } from "../../utils/utils";
 
-function MoviesCard({ card, type }) {
+function MoviesCard({ card, type, onSaveCard, onDeleteCard }) {
   const cardLikeButtonClassName = `card__like ${
     card.saved && "card__like_active"
   }`;
 
-  function handleLikeClick() {
-    card.saved = !card.saved;
-    console.log(card);
+  function handleLikeClick(e) {
+    onSaveCard(card);
   }
 
   function handleDeleteClick() {
     console.log("Delete card");
+    onDeleteCard(card)
   }
 
   return (
@@ -31,7 +30,7 @@ function MoviesCard({ card, type }) {
         <img
           className="card__image"
           alt={card.nameRU}
-          src={MOVIES_API + card.image.url}
+          src={card.image}
         />
       </a>
 

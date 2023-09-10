@@ -6,6 +6,7 @@ class Api {
 
   _handleResponse(res) {
     if (res.ok) {
+      // console.log("API OK: " + res.status)
       return res.json();
     }
     res.json().then((data) => console.log(data));

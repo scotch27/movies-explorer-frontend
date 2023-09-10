@@ -11,12 +11,14 @@ import Register from "../Register/Register";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { PAGES } from "../../utils/const";
-import cards from "../../utils/initialCards";
-import MainApi from "../../utils/MainApi";
+// import cards from "../../utils/initialCards";
+import mainApi from "../../utils/MainApi";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const [savedCards, setSavedCards] = useState([]);
 
   const [autchOk, setAutchOk] = useState(false);
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
@@ -33,7 +35,8 @@ function App() {
 
   const handleLogin = ({ email, password }) => {
     console.log({ email, password });
-    MainApi.authorize({ email, password })
+    mainApi
+      .authorize({ email, password })
       .then((data) => {
         if (data.token) {
           setLoggedIn(true);
@@ -49,7 +52,8 @@ function App() {
   };
 
   const handleRegister = ({ name, email, password }) => {
-    MainApi.register({ name, email, password })
+    mainApi
+      .register({ name, email, password })
       .then((res) => {
         handleLogin({ email, password });
       })
@@ -65,7 +69,8 @@ function App() {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       // проверим токен
-      MainApi.checkToken(jwt)
+      mainApi
+        .checkToken(jwt)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
@@ -79,11 +84,51 @@ function App() {
   };
 
   function handleUpdateUser(values) {
-    MainApi.setUserInfo(values)
+    mainApi
+      .setUserInfo(values)
       .then((res) => {
         setCurrentUser(res);
       })
       .catch(console.error);
+  }
+
+  function handleSaveCard(card) {
+    console.log("handleSaveCard");
+    console.log(card);
+    mainApi
+      .setMovie(card)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(console.error);
+
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    // // // Отправляем запрос в API и получаем обновлённые данные карточки
+    // (isLiked ? api.dislikeCard(card._id) : api.likeCard(card._id))
+    //   .then((newCard) => {
+    //     setCards((state) =>
+    //       state.map((c) => (c._id === card._id ? newCard : c))
+    //     );
+    //   })
+    //   .catch(console.error);
+  }
+
+  function onDeleteCard(card) {
+    console.log("onDeleteCard");
+    console.log(card);
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    // // // Отправляем запрос в API и получаем обновлённые данные карточки
+    // (isLiked ? api.dislikeCard(card._id) : api.likeCard(card._id))
+    //   .then((newCard) => {
+    //     setCards((state) =>
+    //       state.map((c) => (c._id === card._id ? newCard : c))
+    //     );
+    //   })
+    //   .catch(console.error);
   }
 
   useEffect(() => {
@@ -92,9 +137,11 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([MainApi.getUserInfo()])
-        .then(([userData]) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userData, cards]) => {
           setCurrentUser(userData);
+          console.log(cards);
+          setSavedCards(cards);
         })
         .catch(console.error);
     }
@@ -118,16 +165,27 @@ function App() {
         <Route element={<ProtectedRoute loggedIn={loggedIn} toAuth={true} />}>
           <Route
             path={PAGES.MOVIES}
-            element={<Movies loggedIn={loggedIn} cards={cards} />}
+            element={
+              <Movies
+                loggedIn={loggedIn}
+                onSaveCard={handleSaveCard}
+                onDeleteCard={onDeleteCard}
+                savedCards={savedCards}
+              />
+            }
           />
           <Route
             path={PAGES.SAVED_MOVIES}
-            element={<SavedMovies loggedIn={loggedIn} cards={cards} />}
+            element={<SavedMovies loggedIn={loggedIn} cards={savedCards} />}
           />
           <Route
             path={PAGES.PROFILE}
             element={
-              <Profile loggedIn={loggedIn} signOut={signOut} onUpdateUser={handleUpdateUser} />
+              <Profile
+                loggedIn={loggedIn}
+                signOut={signOut}
+                onUpdateUser={handleUpdateUser}
+              />
             }
           />
         </Route>

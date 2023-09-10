@@ -27,13 +27,12 @@ function SearchForm({ onSearchMovies, searchParams }) {
   }
 
   useEffect(() => {
-    console.log(searchParams);
+    // console.log(searchParams);
     if (!searchParams) return;
     if (searchParams.isShortMovies)
       setIsShortMovies(searchParams.isShortMovies);
     if (searchParams.query) {
       setQuery(searchParams.query);
-      setIsSubmit(true);
     }
   }, []);
 
