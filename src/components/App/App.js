@@ -19,7 +19,6 @@ import {
   ERROR_MSG_LOGIN_TOCKEN_FORMAT,
   ERROR_MSG_PROFILE_OTHER,
 } from "../../utils/const";
-// import cards from "../../utils/initialCards";
 import mainApi from "../../utils/MainApi";
 
 function App() {
@@ -40,7 +39,6 @@ function App() {
   };
 
   const handleLogin = ({ email, password }) => {
-    // console.log({ email, password });
     setErrorMessage("");
     mainApi
       .authorize({ email, password })
@@ -57,7 +55,6 @@ function App() {
         setErrorMessage(
           err.code === 400 ? ERROR_MSG_LOGIN_BAD : ERROR_MSG_SERVER
         );
-        // setErrorMessage(ERROR_MSG_LOGIN_BAD);
       });
   };
 
@@ -138,13 +135,12 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      mainApi
-        .getMovies()
-        .then((cards) => {
-          console.log(cards);
-          setSavedCards(cards);
-        })
-        .catch(console.error);
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+      .then(([userData, cards]) => {
+        setCurrentUser(userData);
+        setSavedCards(cards);
+      })
+      .catch(console.error);
     }
   }, [loggedIn]);
 

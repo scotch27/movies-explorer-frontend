@@ -27,7 +27,7 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
     if (currentUser) {
       resetForm(currentUser);
     }
-  }, [currentUser, resetForm]);
+  }, [currentUser, resetForm, loggedIn]);
 
   return (
     <>
