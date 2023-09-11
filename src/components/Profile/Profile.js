@@ -17,12 +17,15 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
     useForm(formName);
   const [profileEditing, setProfileEditing] = useState(false);
   const [activeButton, setActiveBotton] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    onUpdateUser(values);
-    // setErrorApi("Ошибка при сохранении профиля");
+    if (isConfirmed) {
+      onUpdateUser(values);
+      setIsConfirmed(false);
+    } else setIsConfirmed(true);
   }
 
   useEffect(() => {
@@ -32,14 +35,13 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
   }, [currentUser, resetForm, loggedIn]);
 
   useEffect(() => {
-    if (
+    setActiveBotton(
       isFormValid &&
-      currentUser &&
-      (currentUser.name !== values[profileName] ||
-        currentUser.email !== values[profileEmail])
-    )
-      setActiveBotton(true);
-    else setActiveBotton(false);
+        currentUser &&
+        (currentUser.name !== values[profileName] ||
+          currentUser.email !== values[profileEmail])
+    );
+    setIsConfirmed(false);
   }, [isFormValid, currentUser, values]);
 
   return (
@@ -108,7 +110,7 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
                   activeButton ? "" : "profile__save-button_inactive"
                 }`}
               >
-                Сохранить
+                {isConfirmed ? "Подтвердите сохранение" : "Сохранить"}
               </button>
             ) : (
               <>
