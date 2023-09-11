@@ -16,6 +16,7 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
   const [profileEditing, setProfileEditing] = useState(false);
+  const [activeButton, setActiveBotton] = useState(false);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -29,6 +30,17 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
       resetForm(currentUser);
     }
   }, [currentUser, resetForm, loggedIn]);
+
+  useEffect(() => {
+    if (
+      isFormValid &&
+      currentUser &&
+      (currentUser.name !== values[profileName] ||
+        currentUser.email !== values[profileEmail])
+    )
+      setActiveBotton(true);
+    else setActiveBotton(false);
+  }, [isFormValid, currentUser, values]);
 
   return (
     <>
@@ -91,9 +103,9 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
             {profileEditing ? (
               <button
                 type="submit"
-                disabled={!isFormValid ? true : false}
+                disabled={!activeButton ? true : false}
                 className={`profile__save-button ${
-                  isFormValid ? "" : "profile__save-button_inactive"
+                  activeButton ? "" : "profile__save-button_inactive"
                 }`}
               >
                 Сохранить
