@@ -145,12 +145,17 @@ function App() {
           setSavedCards(cards);
         })
         .catch(console.error);
-      // if (path === PAGES.LOGIN && path === PAGES.REGISTER) {
-      //   console.log(path);
-      //   navigate(PAGES.MOVIES, { replace: true });
-      // }
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      if (path === PAGES.LOGIN || path === PAGES.REGISTER) {
+        console.log(path);
+        navigate(PAGES.MOVIES, { replace: true });
+      }
+    }
+  }, [path, loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

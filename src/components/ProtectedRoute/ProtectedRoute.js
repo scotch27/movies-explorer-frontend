@@ -2,10 +2,8 @@ import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { PAGES } from "../../utils/const";
 
-const ProtectedRoute = ({ loggedIn, toAuth }) => {
-  if (!loggedIn && toAuth) return <Navigate to={PAGES.LOGIN} />;
-  if (loggedIn && !toAuth) return <Navigate to={PAGES.MOVIES} />;
-  return <Outlet />;
+const ProtectedRoute = ({ loggedIn }) => {
+  return loggedIn ? <Outlet /> : <Navigate to={PAGES.LOGIN} />;
 };
 
 export default ProtectedRoute;
