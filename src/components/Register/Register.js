@@ -6,7 +6,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
 import { PAGES } from "../../utils/const";
 
-function Register({ handleRegister }) {
+function Register({ handleRegister, message = "" }) {
   const formName = "register";
   const registerName = "name";
   const registerEmail = "email";
@@ -15,7 +15,6 @@ function Register({ handleRegister }) {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
-  const [errorApi, setErrorApi] = useState();
 
   const footerText = (
     <>
@@ -47,7 +46,7 @@ function Register({ handleRegister }) {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={errorApi}
+      error={message}
     >
       <label className="auth-form__field" htmlFor={registerName}>
         Имя

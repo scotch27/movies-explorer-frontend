@@ -1,7 +1,6 @@
 // MoviesCard — компонент одной карточки фильма.
 
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import "./MoviesCard.css";
 import { durationToString } from "../../utils/utils";
 

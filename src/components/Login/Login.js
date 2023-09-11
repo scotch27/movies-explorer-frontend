@@ -7,7 +7,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
 import { PAGES } from "../../utils/const";
 
-function Login({handleLogin}) {
+function Login({handleLogin, message = ""}) {
   const formName = "login";
   const loginEmail = "email";
   const loginPassword = "password";
@@ -15,7 +15,6 @@ function Login({handleLogin}) {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
-  const [errorApi, setErrorApi] = useState();
 
   const footerText = (
     <>
@@ -31,10 +30,6 @@ function Login({handleLogin}) {
     e.preventDefault();
     
     handleLogin(values);
-    // resetForm();
-
-    // setErrorApi("Что-то пошло не так");
-    // console.log("handleSubmit Login");
   }
 
   useEffect(() => {
@@ -51,7 +46,7 @@ function Login({handleLogin}) {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={errorApi}
+      error={message}
     >
       <label className="auth-form__field" htmlFor={loginEmail}>
         E-mail

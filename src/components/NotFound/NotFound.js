@@ -2,7 +2,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import "./NotFound.css";
-import { PAGES } from "../../utils/const";
+import { PAGES, ERROR_MSG_PAGE_NOT_FOUND } from "../../utils/const";
 
 function NotFound() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function NotFound() {
   return (
     <main className="notfound">
       <h1 className="notfound__title">404</h1>
-      <p className="notfound__text">Страница не найдена</p>
+      <p className="notfound__text">{ERROR_MSG_PAGE_NOT_FOUND}</p>
       <Link
         onClick={() => navigate(-1)}
         to={PAGES.MAIN}

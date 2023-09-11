@@ -59,7 +59,6 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
 
   return (
     <>
-      {console.log(searchParams.query)}
       <Header loggedIn={loggedIn} />
       <main className="movies">
         <SearchForm

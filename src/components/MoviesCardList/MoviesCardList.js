@@ -37,21 +37,22 @@ function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
   }
 
   useEffect(() => {
-    if (!isSaved) {
-      function handleResize() {
-        setShowCardsCount(getInitialCardCount());
-      }
+    setTimeout(() => {
+      if (!isSaved) {
+        function handleResize() {
+          setShowCardsCount(getInitialCardCount());
+        }
 
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }
+    }, 500);
   });
 
   return (
     <section className="cards">
       <>
         <ul className="cards__list">
-          {console.log("Length " + showCardsCount)}
           {(isSaved ? cards : cards.slice(0, showCardsCount)).map((card) => (
             <MoviesCard
               key={card.movieId}

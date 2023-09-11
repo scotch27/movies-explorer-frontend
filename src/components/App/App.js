@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./App.css";
 import Main from "../Main/Main";
@@ -10,7 +10,15 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import { PAGES } from "../../utils/const";
+import {
+  PAGES,
+  ERROR_MSG_DUBLICATE_EMAIL,
+  ERROR_MSG_REGISTER_OTHER,
+  ERROR_MSG_LOGIN_BAD,
+  ERROR_MSG_SERVER,
+  ERROR_MSG_LOGIN_TOCKEN_FORMAT,
+  ERROR_MSG_PROFILE_OTHER,
+} from "../../utils/const";
 // import cards from "../../utils/initialCards";
 import mainApi from "../../utils/MainApi";
 
@@ -19,49 +27,54 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const [savedCards, setSavedCards] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(false);
 
-  const [autchOk, setAutchOk] = useState(false);
-  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
-
+  const path = useLocation().pathname;
   const navigate = useNavigate();
 
   const signOut = () => {
     console.log("signOut");
-    // localStorage.removeItem("jwt");
     localStorage.clear();
     setLoggedIn(false);
     navigate(PAGES.MAIN, { replace: true });
   };
 
   const handleLogin = ({ email, password }) => {
-    console.log({ email, password });
+    // console.log({ email, password });
+    setErrorMessage("");
     mainApi
       .authorize({ email, password })
       .then((data) => {
         if (data.token) {
           setLoggedIn(true);
         } else {
-          setAutchOk(false);
-          setIsInfoToolTipOpen(true);
+          setLoggedIn(false);
+          setErrorMessage(ERROR_MSG_LOGIN_TOCKEN_FORMAT);
         }
       })
       .catch((err) => {
-        setAutchOk(false);
-        setIsInfoToolTipOpen(true);
+        // console.log(err);
+        setErrorMessage(
+          err.code === 400 ? ERROR_MSG_LOGIN_BAD : ERROR_MSG_SERVER
+        );
+        // setErrorMessage(ERROR_MSG_LOGIN_BAD);
       });
   };
 
   const handleRegister = ({ name, email, password }) => {
+    setErrorMessage("");
     mainApi
       .register({ name, email, password })
       .then((res) => {
         handleLogin({ email, password });
       })
       .catch((err) => {
-        console.log("error");
-        console.log(err);
-        setAutchOk(false);
-        setIsInfoToolTipOpen(true);
+        // console.log(err);
+        setErrorMessage(
+          err.code === 409
+            ? ERROR_MSG_DUBLICATE_EMAIL
+            : ERROR_MSG_REGISTER_OTHER
+        );
       });
   };
 
@@ -79,8 +92,8 @@ function App() {
           }
         })
         .catch((err) => {
-          setAutchOk(false);
-          // setIsInfoToolTipOpen(true);
+          console.log(err);
+          setErrorMessage(ERROR_MSG_SERVER);
         });
     }
   };
@@ -91,13 +104,15 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
       })
-      .catch(console.error);
+      .catch((err) => {
+        // console.log(err);
+        setErrorMessage(
+          err.code === 409 ? ERROR_MSG_DUBLICATE_EMAIL : ERROR_MSG_PROFILE_OTHER
+        );
+      });
   }
 
   function handleSaveCard(card) {
-    // console.log("handleSaveCard");
-    // console.log(card);
-
     mainApi
       .setMovie(card)
       .then((newCard) => {
@@ -107,8 +122,6 @@ function App() {
   }
 
   function onDeleteCard(card) {
-    // console.log("onDeleteCard");
-    // console.log(card);
     mainApi
       .deleteMovie(card._id)
       .then(() => {
@@ -132,6 +145,10 @@ function App() {
           setSavedCards(cards);
         })
         .catch(console.error);
+      // if (path === PAGES.LOGIN && path === PAGES.REGISTER) {
+      //   console.log(path);
+      //   navigate(PAGES.MOVIES, { replace: true });
+      // }
     }
   }, [loggedIn]);
 
@@ -140,17 +157,17 @@ function App() {
       <Routes>
         <Route path={PAGES.MAIN} element={<Main loggedIn={loggedIn} />} />
 
-        <Route element={<ProtectedRoute loggedIn={loggedIn} toAuth={false} />}>
-          <Route
-            path={PAGES.LOGIN}
-            element={<Login handleLogin={handleLogin} />}
-          />
-          <Route
-            path={PAGES.REGISTER}
-            element={<Register handleRegister={handleRegister} />}
-          />
-        </Route>
-        <Route element={<ProtectedRoute loggedIn={loggedIn} toAuth={true} />}>
+        <Route
+          path={PAGES.LOGIN}
+          element={<Login handleLogin={handleLogin} message={errorMessage} />}
+        />
+        <Route
+          path={PAGES.REGISTER}
+          element={
+            <Register handleRegister={handleRegister} message={errorMessage} />
+          }
+        />
+        <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
           <Route
             path={PAGES.MOVIES}
             element={
@@ -179,6 +196,7 @@ function App() {
                 loggedIn={loggedIn}
                 signOut={signOut}
                 onUpdateUser={handleUpdateUser}
+                message={errorMessage}
               />
             }
           />

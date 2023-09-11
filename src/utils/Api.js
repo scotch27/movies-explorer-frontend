@@ -9,9 +9,9 @@ class Api {
       // console.log("API OK: " + res.status)
       return res.json();
     }
-    res.json().then((data) => console.log(data));
+    res.json().then((body) => console.log(body));
     // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject({ "code" : res.status});
   }
 
   _request(url, options) {

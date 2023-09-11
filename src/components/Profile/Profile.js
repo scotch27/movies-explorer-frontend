@@ -6,7 +6,7 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import useForm from "../../hooks/useForm";
 
-function Profile({ onUpdateUser, loggedIn, signOut }) {
+function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
   const formName = "profileForm";
   const profileName = "name";
   const profileEmail = "email";
@@ -15,7 +15,6 @@ function Profile({ onUpdateUser, loggedIn, signOut }) {
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
   const [profileEditing, setProfileEditing] = useState(false);
-  const [errorApi, setErrorApi] = useState();
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -84,7 +83,7 @@ function Profile({ onUpdateUser, loggedIn, signOut }) {
             </div>
           </div>
 
-          <div className="profile__error-container">{errorApi}</div>
+          <div className="profile__error-container">{message}</div>
           <div className="profile__button-container">
             {profileEditing ? (
               <button
