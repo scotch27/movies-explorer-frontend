@@ -5,7 +5,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
-import { PAGES } from "../../utils/const";
+import { PAGES, REGEX_EMAIL } from "../../utils/const";
 
 function Login({handleLogin, message = ""}) {
   const formName = "login";
@@ -57,6 +57,7 @@ function Login({handleLogin, message = ""}) {
           type="email"
           placeholder="E-mail"
           required
+          pattern={REGEX_EMAIL}
           onChange={handleChange}
           value={values[loginEmail] || ""}
         />

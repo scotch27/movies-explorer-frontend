@@ -6,7 +6,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { searchMovies, movieToCard } from "../../utils/utils";
-import { ERROR_MESSAGE_NOT_FOUND } from "../../utils/const";
+import { ERROR_MSG_NOT_FOUND } from "../../utils/const";
 
 // Movies — компонент страницы с поиском по фильмам
 function SavedMovies({ loggedIn, savedCards, onDeleteCard }) {
@@ -20,7 +20,7 @@ function SavedMovies({ loggedIn, savedCards, onDeleteCard }) {
 
     let movies = searchMovies(savedCards, query, isShortMovies);
     setMovies(movies);
-    if (movies.length === 0) setErrorMessage(ERROR_MESSAGE_NOT_FOUND);
+    if (movies.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
   }
 
   useEffect(() => {

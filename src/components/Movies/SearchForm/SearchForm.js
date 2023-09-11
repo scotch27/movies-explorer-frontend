@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./SearchForm.css";
-import { ERROR_MESSAGE_EMPTY_REQUEST } from "../../../utils/const";
+import { ERROR_MSG_EMPTY_REQUEST } from "../../../utils/const";
 
 function SearchForm({ onSearchMovies, searchParams }) {
   const formName = "searchForm";
@@ -40,7 +40,7 @@ function SearchForm({ onSearchMovies, searchParams }) {
     if (isSubmit === true) {
       setIsSubmit(false);
       if (query.length === 0) {
-        setMessage(ERROR_MESSAGE_EMPTY_REQUEST);
+        setMessage(ERROR_MSG_EMPTY_REQUEST);
         return;
       }
       setMessage("");

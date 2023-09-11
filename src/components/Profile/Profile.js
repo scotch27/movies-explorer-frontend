@@ -5,6 +5,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 import Header from "../Header/Header";
 import useForm from "../../hooks/useForm";
+import { REGEX_EMAIL, REGEX_NAME } from "../../utils/const";
 
 function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
   const formName = "profileForm";
@@ -48,6 +49,7 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
                   type="text"
                   placeholder="от 2 до 30 символов"
                   required
+                  pattern={REGEX_NAME}
                   minLength="2"
                   maxLength="30"
                   onChange={handleChange}
@@ -72,6 +74,7 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
                   type="email"
                   placeholder="E-mail"
                   required
+                  pattern={REGEX_EMAIL}
                   onChange={handleChange}
                   value={values[profileEmail] || ""}
                   disabled={!profileEditing ? true : false}

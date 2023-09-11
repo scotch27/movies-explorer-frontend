@@ -4,7 +4,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
-import { PAGES } from "../../utils/const";
+import { PAGES, REGEX_EMAIL, REGEX_NAME } from "../../utils/const";
 
 function Register({ handleRegister, message = "" }) {
   const formName = "register";
@@ -57,10 +57,12 @@ function Register({ handleRegister, message = "" }) {
           type="text"
           placeholder="от 2 до 30 символов"
           required
+          pattern={REGEX_NAME}
           minLength="2"
           maxLength="30"
           onChange={handleChange}
           value={values[registerName] || ""}
+          
         />
         <span className="auth-form__input-error">{errors[registerName]}</span>
       </label>
@@ -74,6 +76,7 @@ function Register({ handleRegister, message = "" }) {
           type="email"
           placeholder="E-mail"
           required
+          pattern={REGEX_EMAIL}
           onChange={handleChange}
           value={values[registerEmail] || ""}
         />

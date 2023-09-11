@@ -8,8 +8,8 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import moviesApi from "../../utils/MoviesApi";
 import {
-  ERROR_MESSAGE_SEARCH_RESULT,
-  ERROR_MESSAGE_NOT_FOUND,
+  ERROR_MSG_SEARCH_RESULT,
+  ERROR_MSG_NOT_FOUND,
 } from "../../utils/const";
 import { searchMovies, movieToCard } from "../../utils/utils";
 
@@ -40,10 +40,10 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
       })
       .then((cards) => {
         setMovies(cards);
-        if (cards.length === 0) setErrorMessage(ERROR_MESSAGE_NOT_FOUND);
+        if (cards.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
       })
       .catch((error) => {
-        setErrorMessage(ERROR_MESSAGE_SEARCH_RESULT);
+        setErrorMessage(ERROR_MSG_SEARCH_RESULT);
         console.log(error);
       })
       .finally(() => {

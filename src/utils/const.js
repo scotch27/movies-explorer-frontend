@@ -11,11 +11,14 @@ export const PAGES = {
   SAVED_MOVIES: "/saved-movies",
 };
 
+export const REGEX_EMAIL = "[a-z0-9_\\-\\.]+@[a-z0-9_\\-\\.]+[a-z0-9]+\\.[a-z]{2,4}";
+export const REGEX_NAME = "[A-Za-zА-Яа-яЁё0-9\\s\\-]{2,}";
+
 export const SHORT_MOVIES_DURATION = 40;
 
-export const ERROR_MESSAGE_EMPTY_REQUEST = "Нужно ввести ключевое слово";
-export const ERROR_MESSAGE_NOT_FOUND = "Ничего не найдено";
-export const ERROR_MESSAGE_SEARCH_RESULT = "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз";
+export const ERROR_MSG_EMPTY_REQUEST = "Нужно ввести ключевое слово";
+export const ERROR_MSG_NOT_FOUND = "Ничего не найдено";
+export const ERROR_MSG_SEARCH_RESULT = "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз";
 
 export const ERROR_MSG_LOGIN_BAD = "Вы ввели неправильный логин или пароль";
 export const ERROR_MSG_LOGIN_TOCKEN_FORMAT = "При авторизации произошла ошибка. Токен не передан или передан не в том формате";
