@@ -4,6 +4,7 @@ import {
   Routes,
   useNavigate,
   Navigate,
+  useLocation
 } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./App.css";
@@ -34,6 +35,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(false);
 
   const navigate = useNavigate();
+  const currentPath = useLocation().pathname;
 
   const signOut = () => {
     console.log("signOut");
@@ -78,26 +80,6 @@ function App() {
       });
   };
 
-  const tokenCheck = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      // проверим токен
-      mainApi
-        .checkToken(jwt)
-        .then((res) => {
-          if (res) {
-            setCurrentUser({ ...res });
-            // console.log(res);
-            setLoggedIn(true);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setErrorMessage(ERROR_MSG_SERVER);
-        });
-    }
-  };
-
   function handleUpdateUser(values) {
     mainApi
       .setUserInfo(values)
@@ -133,7 +115,25 @@ function App() {
   }
 
   useEffect(() => {
-    tokenCheck();
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      // проверим токен
+      mainApi
+        .checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            setCurrentUser({ ...res });
+            setLoggedIn(true);
+            if (currentPath !== PAGES.MAIN ) {
+                navigate(currentPath, {replace: true});
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMessage(ERROR_MSG_SERVER);
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -156,7 +156,7 @@ function App() {
           path={PAGES.LOGIN}
           element={
             loggedIn ? (
-              <Navigate to={PAGES.MAIN} />
+              <Navigate to={PAGES.MOVIES} />
             ) : (
               <Login handleLogin={handleLogin} message={errorMessage} />
             )
@@ -167,7 +167,7 @@ function App() {
           path={PAGES.REGISTER}
           element={
             loggedIn ? (
-              <Navigate to={PAGES.MAIN} />
+              <Navigate to={PAGES.MOVIES} />
             ) : (
               <Register
                 handleRegister={handleRegister}
