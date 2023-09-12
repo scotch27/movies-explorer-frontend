@@ -15,6 +15,7 @@ function Register({ handleRegister, message = "" }) {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
+    const [isSubmit, setIsSubmit] = useState(false);
 
   const footerText = (
     <>
@@ -28,6 +29,7 @@ function Register({ handleRegister, message = "" }) {
   const handleSubmit = (e) => {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
+    setIsSubmit(true);
     handleRegister(values);
     // resetForm();
   };
@@ -46,7 +48,7 @@ function Register({ handleRegister, message = "" }) {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={message}
+      error={(isSubmit && message) ? message : ""}
     >
       <label className="auth-form__field" htmlFor={registerName}>
         Имя

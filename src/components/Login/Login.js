@@ -7,7 +7,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
 import { PAGES, REGEX_EMAIL } from "../../utils/const";
 
-function Login({handleLogin, message = ""}) {
+function Login({ handleLogin, message = "" }) {
   const formName = "login";
   const loginEmail = "email";
   const loginPassword = "password";
@@ -15,6 +15,7 @@ function Login({handleLogin, message = ""}) {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
+    const [isSubmit, setIsSubmit] = useState(false);
 
   const footerText = (
     <>
@@ -28,7 +29,7 @@ function Login({handleLogin, message = ""}) {
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    
+    setIsSubmit(true);
     handleLogin(values);
   }
 
@@ -46,7 +47,7 @@ function Login({handleLogin, message = ""}) {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={message}
+      error={(isSubmit && message) ? message : ""}
     >
       <label className="auth-form__field" htmlFor={loginEmail}>
         E-mail
