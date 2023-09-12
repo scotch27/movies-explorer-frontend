@@ -41,9 +41,8 @@ export const ERROR_MSG_PAGE_NOT_FOUND =
 
 export const SHOW_CARDS = [
   { width: 1280, initial: 16, showMore: 4 },
-  { width: 1010, initial: 12, showMore: 3 },
+  { width: 1011, initial: 12, showMore: 3 },
   { width: 768, initial: 8, showMore: 2 },
-  { width: 480, initial: 5, showMore: 2 },
   { width: 0, initial: 5, showMore: 2 },
 ];
 

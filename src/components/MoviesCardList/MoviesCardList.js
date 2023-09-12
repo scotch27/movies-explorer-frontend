@@ -11,19 +11,14 @@ function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
   //   const cards = undefined;
   function showMore() {
     setShowCardsCount(showCardsCount + getShowMoreCardCount());
-    console.log("showMore");
+    // console.log("showMore");
     // setIslimit(true);
   }
 
   function getInitialCardCount() {
     const screenWidth = window.innerWidth;
-    console.log("getInitialCardCount: screenWidth " + screenWidth);
-    console.log("getInitialCardCount: SHOW_CARDS " + SHOW_CARDS.length);
     for (let i = 0; i < SHOW_CARDS.length; i++) {
-      
-      console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
-      if (screenWidth > SHOW_CARDS[i].width) {
-        console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
+      if (screenWidth >= SHOW_CARDS[i].width) {
         return SHOW_CARDS[i].initial;
       }
     }
@@ -31,12 +26,9 @@ function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
 
   function getShowMoreCardCount() {
     const screenWidth = window.innerWidth;
-    console.log("getShowMoreCardCount: screenWidth " + screenWidth);
     for (let i = 0; i < SHOW_CARDS.length; i++) {
-      
       console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
-      if (screenWidth > SHOW_CARDS[i].width) {
-        console.log("getShowMoreCardCount: " + SHOW_CARDS[i].initial);
+      if (screenWidth >= SHOW_CARDS[i].width) {
         return SHOW_CARDS[i].showMore;
       }
     }
@@ -48,7 +40,6 @@ function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
         function handleResize() {
           setShowCardsCount(getInitialCardCount());
         }
-
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
       }
