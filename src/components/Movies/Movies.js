@@ -21,6 +21,7 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
     localStorage.getItem("isShortMovies") === "true"
   );
 
+  const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,27 +34,34 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
     setLocalQuery(query);
     setLocalIsShort(isShortMovies);
     setIsSearch(true);
-
     setIsLoading(true);
-    moviesApi
-      .getMovies()
-      .then((res) => searchMovies(res, query))
-      .then((movies) => {
-        localStorage.setItem("movies", JSON.stringify(movies));
-        movies = filterMovies(movies, isShortMovies);
-        return movies.map((movie) => movieToCard(movie, savedCards));
-      })
-      .then((cards) => {
-        setMovies(cards);
-        if (cards.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
-      })
-      .catch((error) => {
-        setErrorMessage(ERROR_MSG_SEARCH_RESULT);
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    if (allMovies.length > 0) {
+      search(allMovies);
+      setIsLoading(false);
+    } else {
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          setAllMovies(res);
+          search(res);
+        })
+        .catch((error) => {
+          setErrorMessage(ERROR_MSG_SEARCH_RESULT);
+          console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
+    function search(allMovies) {
+      let movies = searchMovies(allMovies, query);
+      localStorage.setItem("movies", JSON.stringify(movies));
+      movies = filterMovies(movies, isShortMovies);
+      const cards = movies.map((movie) => movieToCard(movie, savedCards));
+      setMovies(cards);
+      if (cards.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
+    }
   }
 
   function onFilterMovies(isShortMovies) {
