@@ -11,14 +11,14 @@ import {
   ERROR_MSG_SEARCH_RESULT,
   ERROR_MSG_NOT_FOUND,
 } from "../../utils/const";
-import { searchMovies, movieToCard } from "../../utils/utils";
+import { searchMovies, filterMovies, movieToCard } from "../../utils/utils";
 
 // Movies — компонент страницы с поиском по фильмам
 function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
-  const [searchParams, setSearchParams] = useState({
-    query: localStorage.getItem("query"),
-    isShortMovies: localStorage.getItem("isShortMovies") === "true",
-  });
+  const [localQuery, setLocalQuery] = useState(localStorage.getItem("query"));
+  const [localIsShort, setLocalIsShort] = useState(
+    localStorage.getItem("isShortMovies") === "true"
+  );
 
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,14 +28,17 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
     setErrorMessage("");
     localStorage.setItem("query", query);
     localStorage.setItem("isShortMovies", isShortMovies);
-    setSearchParams({ query, isShortMovies });
+    setLocalQuery(query);
+    setLocalIsShort(isShortMovies);
+    // setSearchParams({ query, isShortMovies });
 
     setIsLoading(true);
     moviesApi
       .getMovies()
-      .then((res) => searchMovies(res, query, isShortMovies))
+      .then((res) => searchMovies(res, query))
       .then((movies) => {
         localStorage.setItem("movies", JSON.stringify(movies));
+        movies = filterMovies(movies, isShortMovies);
         return movies.map((movie) => movieToCard(movie, savedCards));
       })
       .then((cards) => {
@@ -51,8 +54,25 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
       });
   }
 
+  function onFilterMovies(isShortMovies) {
+    console.log("onFilterMovies: "+ isShortMovies);
+    setErrorMessage("");
+    localStorage.setItem("isShortMovies", isShortMovies);
+    setLocalIsShort(isShortMovies);
+    let movies = JSON.parse(localStorage.getItem("movies"));
+    movies = filterMovies(movies, isShortMovies);
+    setMovies(movies.map((movie) => movieToCard(movie, savedCards)));
+    if (movies.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
+  }
+
   useEffect(() => {
-    const movies = JSON.parse(localStorage.getItem("movies"));
+    console.log("useEffect Movie");
+    console.log("isShortMovies: " + localIsShort);
+
+    let movies = JSON.parse(localStorage.getItem("movies"));
+    console.log(movies.length);
+    movies = filterMovies(movies, localIsShort);
+    console.log(movies.length);
     if (movies)
       setMovies(movies.map((movie) => movieToCard(movie, savedCards)));
   }, [savedCards]);
@@ -63,13 +83,14 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
       <main className="movies">
         <SearchForm
           onSearchMovies={onSearchMovies}
-          searchParams={searchParams}
+          searchParams={{ query: localQuery, isShortMovies: localIsShort }}
+          onShortMovies={onFilterMovies}
         />
         <ErrorMessage message={errorMessage} />
         {isLoading ? (
           <Preloader />
         ) : (
-          searchParams.query &&
+          localQuery &&
           !errorMessage && (
             <MoviesCardList
               cards={movies}

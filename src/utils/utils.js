@@ -1,18 +1,25 @@
 import { MOVIES_API, SHORT_MOVIES_DURATION } from "./const";
 
 // Функция дпоиска фильмов
-export function searchMovies(movies, query, isShortMovies = false) {
+export function searchMovies(movies, query) {
+  if (!query) return movies;
   const modifiedQuery = query.toUpperCase().trim();
 
   return movies.filter(
-    ({ nameRU, nameEN, duration }) =>
-      (isShortMovies ? duration <= SHORT_MOVIES_DURATION : true) &&
-      (isFind(nameRU, modifiedQuery) || isFind(nameEN, modifiedQuery))
+    ({ nameRU, nameEN }) =>
+      isFind(nameRU, modifiedQuery) || isFind(nameEN, modifiedQuery)
   );
-
   function isFind(text, search) {
     return text.toUpperCase().trim().indexOf(search) !== -1;
   }
+}
+
+// Функция фильтрации фильмов
+export function filterMovies(movies, isShortMovies = false) {
+  console.log(movies);
+  return movies.filter(({ duration }) =>
+    isShortMovies ? duration <= SHORT_MOVIES_DURATION : true
+  );
 }
 
 // Функция преобразования длительностb фильма в строку для отображения

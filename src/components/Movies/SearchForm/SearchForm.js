@@ -4,12 +4,11 @@ import React, { useEffect, useState } from "react";
 import "./SearchForm.css";
 import { ERROR_MSG_EMPTY_REQUEST } from "../../../utils/const";
 
-function SearchForm({ onSearchMovies, searchParams }) {
+function SearchForm({ onSearchMovies, searchParams, onShortMovies }) {
   const formName = "searchForm";
 
   const [query, setQuery] = useState("");
   const [isShortMovies, setIsShortMovies] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
   const [message, setMessage] = useState("");
 
   function handleChangeQuery(e) {
@@ -18,12 +17,16 @@ function SearchForm({ onSearchMovies, searchParams }) {
 
   function handleCheckIsShortMovies(e) {
     setIsShortMovies(!isShortMovies);
-    setIsSubmit(true);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsSubmit(true);
+    setMessage("");
+    if (query.length === 0) {
+      setMessage(ERROR_MSG_EMPTY_REQUEST);
+      return;
+    }
+    onSearchMovies({ query, isShortMovies });
   }
 
   useEffect(() => {
@@ -37,16 +40,8 @@ function SearchForm({ onSearchMovies, searchParams }) {
   }, []);
 
   useEffect(() => {
-    if (isSubmit === true) {
-      setIsSubmit(false);
-      if (query.length === 0) {
-        setMessage(ERROR_MSG_EMPTY_REQUEST);
-        return;
-      }
-      setMessage("");
-      onSearchMovies({ query, isShortMovies });
-    }
-  }, [isSubmit]);
+    onShortMovies(isShortMovies);
+  }, [isShortMovies]);
 
   return (
     <section className="search">

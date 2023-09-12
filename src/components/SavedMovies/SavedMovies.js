@@ -5,47 +5,41 @@ import Footer from "../Footer/Footer";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import { searchMovies, movieToCard } from "../../utils/utils";
+import { searchMovies, filterMovies, movieToCard } from "../../utils/utils";
 import { ERROR_MSG_NOT_FOUND } from "../../utils/const";
 
 // Movies — компонент страницы с поиском по фильмам
 function SavedMovies({ loggedIn, savedCards, onDeleteCard }) {
+  const [isSearch, setIsSearch] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [searchParams, setSearchParams] = useState({});
+  const [localQuery, setLocalQuery] = useState("");
+  const [localIsShort, setLocalIsShort] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
   function onSearchMovies({ query, isShortMovies }) {
-    setErrorMessage("");
-    setSearchParams({ query, isShortMovies });
+    setLocalQuery(query);
+    setIsSearch(true);
+  }
 
-    let movies = searchMovies(savedCards, query, isShortMovies);
-    setMovies(movies);
-    if (movies.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
+  function onFilterMovies(isShortMovies){
+    setLocalIsShort(isShortMovies);
+    setIsSearch(true);
   }
 
   useEffect(() => {
-    // console.log("useEffect [] SavedMovies");
-    setMovies(savedCards);
-  }, []);
-
-  useEffect(() => {
-    // console.log("useEffect [cards] SavedMovies");
-    setMovies(
-      searchParams.query
-        ? searchMovies(
-            savedCards,
-            searchParams.query,
-            searchParams.isShortMovies
-          )
-        : savedCards
-    );
-  }, [savedCards]);
+    setErrorMessage("");
+    let movies = localQuery ? searchMovies(savedCards, localQuery) : savedCards;
+    movies = filterMovies(movies, localIsShort);
+    setMovies(movies);
+    if (movies.length === 0 && isSearch) setErrorMessage(ERROR_MSG_NOT_FOUND);
+  }, [savedCards, localQuery, localIsShort]);
 
   return (
     <>
       <Header loggedIn={loggedIn} />
       <main className="saved-movies">
-        <SearchForm onSearchMovies={onSearchMovies} />
+        <SearchForm onSearchMovies={onSearchMovies} 
+          onShortMovies= {onFilterMovies}/>
         {errorMessage ? (
           <ErrorMessage message={errorMessage} />
         ) : (
