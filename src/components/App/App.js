@@ -192,7 +192,7 @@ function App() {
         <Route
           path={PAGES.SAVED_MOVIES}
           element={
-            <SavedMovies
+            <ProtectedRoute
               element={SavedMovies}
               loggedIn={loggedIn}
               onDeleteCard={onDeleteCard}
