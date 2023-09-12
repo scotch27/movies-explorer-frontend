@@ -1,12 +1,9 @@
 // MoviesCardList — компонент, который управляет отрисовкой карточек фильмов на страницу и их количеством.
-// Количество карточек, которые отображаются на странице, зависит от ширины экрана устройства.
-// Ширина 1280px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек.
-// Ширина 768px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек.
-// Ширина от 320px до 480px — 5 карточек по 1 в ряд. Кнопка «Ещё» загружает по 2 карточки.
 
 import React, { useEffect, useState } from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import { SHOW_CARDS } from "../../utils/const";
 
 function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
   const [showCardsCount, setShowCardsCount] = useState(getInitialCardCount());
@@ -20,20 +17,29 @@ function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
 
   function getInitialCardCount() {
     const screenWidth = window.innerWidth;
-    if (screenWidth <= 480) return 5;
-    if (screenWidth < 768) return 4;
-    if (screenWidth <= 1010) return 4 * 2;
-    if (screenWidth < 1280) return 4 * 3;
-    return 4 * 4;
+    console.log("getInitialCardCount: screenWidth " + screenWidth);
+    console.log("getInitialCardCount: SHOW_CARDS " + SHOW_CARDS.length);
+    for (let i = 0; i < SHOW_CARDS.length; i++) {
+      
+      console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
+      if (screenWidth > SHOW_CARDS[i].width) {
+        console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
+        return SHOW_CARDS[i].initial;
+      }
+    }
   }
 
   function getShowMoreCardCount() {
     const screenWidth = window.innerWidth;
-    if (screenWidth <= 480) return 2;
-    if (screenWidth < 768) return 1;
-    if (screenWidth <= 1010) return 1 * 2;
-    if (screenWidth < 1280) return 1 * 3;
-    return 1 * 4;
+    console.log("getShowMoreCardCount: screenWidth " + screenWidth);
+    for (let i = 0; i < SHOW_CARDS.length; i++) {
+      
+      console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
+      if (screenWidth > SHOW_CARDS[i].width) {
+        console.log("getShowMoreCardCount: " + SHOW_CARDS[i].initial);
+        return SHOW_CARDS[i].showMore;
+      }
+    }
   }
 
   useEffect(() => {
