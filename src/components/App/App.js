@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./App.css";
 import Main from "../Main/Main";
@@ -28,7 +33,6 @@ function App() {
   const [savedCards, setSavedCards] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
 
-  const path = useLocation().pathname;
   const navigate = useNavigate();
 
   const signOut = () => {
@@ -51,7 +55,6 @@ function App() {
         }
       })
       .catch((err) => {
-        // console.log(err);
         setErrorMessage(
           err.code === 400 ? ERROR_MSG_LOGIN_BAD : ERROR_MSG_SERVER
         );
@@ -136,22 +139,13 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setSavedCards(cards);
-      })
-      .catch(console.error);
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setSavedCards(cards);
+        })
+        .catch(console.error);
     }
   }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn) {
-      if (path === PAGES.LOGIN || path === PAGES.REGISTER) {
-        console.log(path);
-        navigate(PAGES.MOVIES, { replace: true });
-      }
-    }
-  }, [path, loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -160,48 +154,64 @@ function App() {
 
         <Route
           path={PAGES.LOGIN}
-          element={<Login handleLogin={handleLogin} message={errorMessage} />}
+          element={
+            loggedIn ? (
+              <Navigate to={PAGES.MAIN} />
+            ) : (
+              <Login handleLogin={handleLogin} message={errorMessage} />
+            )
+          }
         />
+
         <Route
           path={PAGES.REGISTER}
           element={
-            <Register handleRegister={handleRegister} message={errorMessage} />
-          }
-        />
-        <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
-          <Route
-            path={PAGES.MOVIES}
-            element={
-              <Movies
-                loggedIn={loggedIn}
-                onSaveCard={handleSaveCard}
-                onDeleteCard={onDeleteCard}
-                savedCards={savedCards}
-              />
-            }
-          />
-          <Route
-            path={PAGES.SAVED_MOVIES}
-            element={
-              <SavedMovies
-                loggedIn={loggedIn}
-                onDeleteCard={onDeleteCard}
-                savedCards={savedCards}
-              />
-            }
-          />
-          <Route
-            path={PAGES.PROFILE}
-            element={
-              <Profile
-                loggedIn={loggedIn}
-                signOut={signOut}
-                onUpdateUser={handleUpdateUser}
+            loggedIn ? (
+              <Navigate to={PAGES.MAIN} />
+            ) : (
+              <Register
+                handleRegister={handleRegister}
                 message={errorMessage}
               />
-            }
-          />
-        </Route>
+            )
+          }
+        />
+
+        <Route
+          path={PAGES.MOVIES}
+          element={
+            <ProtectedRoute
+              element={Movies}
+              loggedIn={loggedIn}
+              onSaveCard={handleSaveCard}
+              onDeleteCard={onDeleteCard}
+              savedCards={savedCards}
+            />
+          }
+        />
+        <Route
+          path={PAGES.SAVED_MOVIES}
+          element={
+            <SavedMovies
+              element={SavedMovies}
+              loggedIn={loggedIn}
+              onDeleteCard={onDeleteCard}
+              savedCards={savedCards}
+            />
+          }
+        />
+        <Route
+          path={PAGES.PROFILE}
+          element={
+            <ProtectedRoute
+              element={Profile}
+              loggedIn={loggedIn}
+              signOut={signOut}
+              onUpdateUser={handleUpdateUser}
+              message={errorMessage}
+            />
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </CurrentUserContext.Provider>

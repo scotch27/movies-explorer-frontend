@@ -110,7 +110,7 @@ function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
                   activeButton ? "" : "profile__save-button_inactive"
                 }`}
               >
-                {isConfirmed ? "Подтвердите сохранение" : "Сохранить"}
+                {isConfirmed ? "Подтвердите сохранение изменений" : "Сохранить"}
               </button>
             ) : (
               <>
