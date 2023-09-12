@@ -15,6 +15,7 @@ import { searchMovies, filterMovies, movieToCard } from "../../utils/utils";
 
 // Movies — компонент страницы с поиском по фильмам
 function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
+  const [isSearch, setIsSearch] = useState(false);
   const [localQuery, setLocalQuery] = useState(localStorage.getItem("query"));
   const [localIsShort, setLocalIsShort] = useState(
     localStorage.getItem("isShortMovies") === "true"
@@ -22,15 +23,16 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
 
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function onSearchMovies({ query, isShortMovies }) {
+    console.log("onSearchMovies: ");
     setErrorMessage("");
     localStorage.setItem("query", query);
     localStorage.setItem("isShortMovies", isShortMovies);
     setLocalQuery(query);
     setLocalIsShort(isShortMovies);
-    // setSearchParams({ query, isShortMovies });
+    setIsSearch(true);
 
     setIsLoading(true);
     moviesApi
@@ -55,24 +57,19 @@ function Movies({ loggedIn, onSaveCard, onDeleteCard, savedCards }) {
   }
 
   function onFilterMovies(isShortMovies) {
-    console.log("onFilterMovies: "+ isShortMovies);
     setErrorMessage("");
     localStorage.setItem("isShortMovies", isShortMovies);
     setLocalIsShort(isShortMovies);
     let movies = JSON.parse(localStorage.getItem("movies"));
     movies = filterMovies(movies, isShortMovies);
     setMovies(movies.map((movie) => movieToCard(movie, savedCards)));
-    if (movies.length === 0) setErrorMessage(ERROR_MSG_NOT_FOUND);
+    if (movies.length === 0 && isSearch) setErrorMessage(ERROR_MSG_NOT_FOUND);
+    setIsSearch(true);
   }
 
   useEffect(() => {
-    console.log("useEffect Movie");
-    console.log("isShortMovies: " + localIsShort);
-
     let movies = JSON.parse(localStorage.getItem("movies"));
-    console.log(movies.length);
     movies = filterMovies(movies, localIsShort);
-    console.log(movies.length);
     if (movies)
       setMovies(movies.map((movie) => movieToCard(movie, savedCards)));
   }, [savedCards]);

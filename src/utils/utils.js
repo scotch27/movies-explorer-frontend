@@ -16,8 +16,7 @@ export function searchMovies(movies, query) {
 
 // Функция фильтрации фильмов
 export function filterMovies(movies, isShortMovies = false) {
-  console.log(movies);
-  return movies.filter(({ duration }) =>
+  return !movies ? [] : movies.filter(({ duration }) =>
     isShortMovies ? duration <= SHORT_MOVIES_DURATION : true
   );
 }
