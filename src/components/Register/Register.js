@@ -4,9 +4,9 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
-import { PAGES } from "../../utils/const";
+import { PAGES, REGEX_EMAIL, REGEX_NAME } from "../../utils/const";
 
-function Register() {
+function Register({ handleRegister, message = "" }) {
   const formName = "register";
   const registerName = "name";
   const registerEmail = "email";
@@ -15,7 +15,7 @@ function Register() {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
-  const [errorApi, setErrorApi] = useState();
+    const [isSubmit, setIsSubmit] = useState(false);
 
   const footerText = (
     <>
@@ -26,18 +26,19 @@ function Register() {
     </>
   );
 
+  const handleSubmit = (e) => {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    setIsSubmit(true);
+    handleRegister(values);
+    // resetForm();
+  };
+
   useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);
     }
   }, [currentUser, resetForm]);
-
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-    setErrorApi("Что-то пошло не так");
-    console.log("handleSubmit Register");
-  }
 
   return (
     <AuthForm
@@ -47,7 +48,7 @@ function Register() {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={errorApi}
+      error={(isSubmit && message) ? message : ""}
     >
       <label className="auth-form__field" htmlFor={registerName}>
         Имя
@@ -58,10 +59,12 @@ function Register() {
           type="text"
           placeholder="от 2 до 30 символов"
           required
+          pattern={REGEX_NAME}
           minLength="2"
           maxLength="30"
           onChange={handleChange}
           value={values[registerName] || ""}
+          
         />
         <span className="auth-form__input-error">{errors[registerName]}</span>
       </label>
@@ -75,6 +78,7 @@ function Register() {
           type="email"
           placeholder="E-mail"
           required
+          pattern={REGEX_EMAIL}
           onChange={handleChange}
           value={values[registerEmail] || ""}
         />

@@ -5,8 +5,9 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 import Header from "../Header/Header";
 import useForm from "../../hooks/useForm";
+import { REGEX_EMAIL, REGEX_NAME } from "../../utils/const";
 
-function Profile({ loggedIn, signOut }) {
+function Profile({ onUpdateUser, loggedIn, signOut, message = "" }) {
   const formName = "profileForm";
   const profileName = "name";
   const profileEmail = "email";
@@ -15,20 +16,33 @@ function Profile({ loggedIn, signOut }) {
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
   const [profileEditing, setProfileEditing] = useState(false);
-  const [errorApi, setErrorApi] = useState();
+  const [activeButton, setActiveBotton] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-
-    setErrorApi("Ошибка при сохранении профиля");
+    if (isConfirmed) {
+      onUpdateUser(values);
+      setIsConfirmed(false);
+    } else setIsConfirmed(true);
   }
 
   useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);
     }
-  }, [currentUser, resetForm]);
+  }, [currentUser, resetForm, loggedIn]);
+
+  useEffect(() => {
+    setActiveBotton(
+      isFormValid &&
+        currentUser &&
+        (currentUser.name !== values[profileName] ||
+          currentUser.email !== values[profileEmail])
+    );
+    setIsConfirmed(false);
+  }, [isFormValid, currentUser, values]);
 
   return (
     <>
@@ -49,6 +63,7 @@ function Profile({ loggedIn, signOut }) {
                   type="text"
                   placeholder="от 2 до 30 символов"
                   required
+                  pattern={REGEX_NAME}
                   minLength="2"
                   maxLength="30"
                   onChange={handleChange}
@@ -73,6 +88,7 @@ function Profile({ loggedIn, signOut }) {
                   type="email"
                   placeholder="E-mail"
                   required
+                  pattern={REGEX_EMAIL}
                   onChange={handleChange}
                   value={values[profileEmail] || ""}
                   disabled={!profileEditing ? true : false}
@@ -84,17 +100,17 @@ function Profile({ loggedIn, signOut }) {
             </div>
           </div>
 
-          <div className="profile__error-container">{errorApi}</div>
+          <div className="profile__error-container">{message}</div>
           <div className="profile__button-container">
             {profileEditing ? (
               <button
                 type="submit"
-                disabled={!isFormValid ? true : false}
+                disabled={!activeButton ? true : false}
                 className={`profile__save-button ${
-                  isFormValid ? "" : "profile__save-button_inactive"
+                  activeButton ? "" : "profile__save-button_inactive"
                 }`}
               >
-                Сохранить
+                {isConfirmed ? "Подтвердите сохранение изменений" : "Сохранить"}
               </button>
             ) : (
               <>

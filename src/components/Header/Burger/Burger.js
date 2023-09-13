@@ -7,12 +7,10 @@ function Burger({ classSfx }) {
 
   const handleOpen = () => {
     setIsOpen(true);
-    console.log("Burger handleOpen!");
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    console.log("Burger handleClose!");
   };
 
   return (

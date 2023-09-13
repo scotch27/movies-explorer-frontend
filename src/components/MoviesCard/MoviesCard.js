@@ -1,39 +1,42 @@
 // MoviesCard — компонент одной карточки фильма.
 
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import "./MoviesCard.css";
+import { durationToString } from "../../utils/utils";
 
-function MoviesCard({ card, type }) {
+function MoviesCard({ card, isSaved, onSaveCard, onDeleteCard }) {
   const cardLikeButtonClassName = `card__like ${
-    card.saved && "card__like_active"
+    card._id && "card__like_active"
   }`;
 
-  function handleLikeClick() {
-    card.saved = !card.saved;
-    console.log(card);
+  function handleLikeClick(e) {
+    onSaveCard(card);
   }
 
   function handleDeleteClick() {
     console.log("Delete card");
+    onDeleteCard(card)
   }
 
   return (
     <li className="card">
       <a
-        href={card.image}
+        href={card.trailerLink}
         className="card__link"
         target="_blank"
         rel="noreferrer"
       >
-        <img className="card__image" alt={card.nameRU} src={card.image} />
+        <img
+          className="card__image"
+          alt={card.nameRU}
+          src={card.image}
+        />
       </a>
 
       <div className="card__container">
         <div className="card__info">
           <h2 className="card__text">{card.nameRU}</h2>
-          {console.log(type)}
-          {type === "saved" ? (
+          {isSaved ? (
             <button
               className="card__delete"
               type="button"
@@ -45,11 +48,11 @@ function MoviesCard({ card, type }) {
               className={cardLikeButtonClassName}
               type="button"
               aria-label="Поставить лайк"
-              onClick={handleLikeClick}
+              onClick={card._id ? handleDeleteClick : handleLikeClick}
             />
-          ) }
+          )}
         </div>
-        <div className="card__duration">{card.duration}</div>
+        <div className="card__duration">{durationToString(card.duration)}</div>
       </div>
     </li>
   );

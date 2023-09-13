@@ -25,7 +25,7 @@ function AuthForm({
         <div className="auth-form__button-container">
           <button
             type="submit"
-            disabled={!isFormValid ? true : false}
+            disabled={!isFormValid}
             className={`auth-form__save-button ${
               isFormValid ? "" : "auth-form__save-button_inactive"
             }`}

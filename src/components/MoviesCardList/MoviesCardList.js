@@ -1,48 +1,73 @@
 // MoviesCardList — компонент, который управляет отрисовкой карточек фильмов на страницу и их количеством.
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MoviesCardList.css";
-import Preloader from "../Preloader/Preloader";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import { SHOW_CARDS } from "../../utils/const";
 
-function MoviesCardList({ cards, type =""}) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [islimit, setIslimit] = useState(false);
+function MoviesCardList({ cards, isSaved = false, onSaveCard, onDeleteCard }) {
+  const [showCardsCount, setShowCardsCount] = useState(getInitialCardCount());
 
-//   const cards = undefined;
+  //   const cards = undefined;
   function showMore() {
-    console.log("showMore");
-    setIslimit(true);
+    setShowCardsCount(showCardsCount + getShowMoreCardCount());
+    // console.log("showMore");
+    // setIslimit(true);
   }
+
+  function getInitialCardCount() {
+    const screenWidth = window.innerWidth;
+    for (let i = 0; i < SHOW_CARDS.length; i++) {
+      if (screenWidth >= SHOW_CARDS[i].width) {
+        return SHOW_CARDS[i].initial;
+      }
+    }
+  }
+
+  function getShowMoreCardCount() {
+    const screenWidth = window.innerWidth;
+    for (let i = 0; i < SHOW_CARDS.length; i++) {
+      console.log("getInitialCardCount: " + SHOW_CARDS[i].initial);
+      if (screenWidth >= SHOW_CARDS[i].width) {
+        return SHOW_CARDS[i].showMore;
+      }
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!isSaved) {
+        function handleResize() {
+          setShowCardsCount(getInitialCardCount());
+        }
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }
+    }, 500);
+  });
 
   return (
     <section className="cards">
-      {isLoading && <Preloader />}
-      {cards === undefined || cards.length === 0 ? (
-        <div className="cards__error-container">
-          <div className="cards__error">Ничего не найдено</div>
-        </div>
-      ) : (
-        <>
-          <ul className="cards__list">
-            {cards.map((card) => (
-              <MoviesCard key={card.id} card={card}  type={type}/>
-            ))}
-          </ul>
+      <>
+        <ul className="cards__list">
+          {(isSaved ? cards : cards.slice(0, showCardsCount)).map((card) => (
+            <MoviesCard
+              key={card.movieId}
+              card={card}
+              isSaved={isSaved}
+              onSaveCard={onSaveCard}
+              onDeleteCard={onDeleteCard}
+            />
+          ))}
+        </ul>
+        {!isSaved && showCardsCount < cards.length && (
           <div className="cards__button-container">
-            <button
-              type="button"
-              disabled={islimit ? true : false}
-              className={`cards__button ${
-                islimit ? "cards__button_inactive" : ""
-              }`}
-              onClick={showMore}
-            >
+            <button type="button" className="cards__button" onClick={showMore}>
               Ещё
             </button>
           </div>
-        </>
-      )}
+        )}
+      </>
     </section>
   );
 }

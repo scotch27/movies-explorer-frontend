@@ -5,9 +5,9 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
 import useForm from "../../hooks/useForm";
-import { PAGES } from "../../utils/const";
+import { PAGES, REGEX_EMAIL } from "../../utils/const";
 
-function Login() {
+function Login({ handleLogin, message = "" }) {
   const formName = "login";
   const loginEmail = "email";
   const loginPassword = "password";
@@ -15,7 +15,7 @@ function Login() {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, handleChange, isFormValid, resetForm } =
     useForm(formName);
-  const [errorApi, setErrorApi] = useState();
+    const [isSubmit, setIsSubmit] = useState(false);
 
   const footerText = (
     <>
@@ -26,19 +26,18 @@ function Login() {
     </>
   );
 
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    setIsSubmit(true);
+    handleLogin(values);
+  }
+
   useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);
     }
   }, [currentUser, resetForm]);
-
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-
-    setErrorApi("Что-то пошло не так");
-    console.log("handleSubmit Login");
-  }
 
   return (
     <AuthForm
@@ -48,7 +47,7 @@ function Login() {
       footerText={footerText}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
-      error={errorApi}
+      error={(isSubmit && message) ? message : ""}
     >
       <label className="auth-form__field" htmlFor={loginEmail}>
         E-mail
@@ -59,6 +58,7 @@ function Login() {
           type="email"
           placeholder="E-mail"
           required
+          pattern={REGEX_EMAIL}
           onChange={handleChange}
           value={values[loginEmail] || ""}
         />

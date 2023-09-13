@@ -1,12 +1,8 @@
-.card {
-}
-
 .card__image {
   height: 151px;
   max-width: 270px;
-}
-
-.card__container {
+  object-fit: cover;
+  width: 100%;
 }
 
 .card__info {
@@ -66,23 +62,30 @@
   opacity: 0.7;
 }
 
-.card__delete{
-    box-sizing: border-box;
-    width: 24px;
-    height: 24px;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    border: none;
-    transition: 0.4s linear;
-    flex-shrink: 0;
-    margin-top: 7px;
+.card__delete {
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+  transition: 0.4s linear;
+  flex-shrink: 0;
+  margin-top: 7px;
 }
 
-.card__delete:hover {
+.card:hover .card__delete {
+  opacity: 0.7;
+  background-image: url(../../images/delete-card.svg);
+}
+
+@media (pointer: coarse) {
+  .card__delete {
     opacity: 0.7;
     background-image: url(../../images/delete-card.svg);
   }
+}
 
 @media screen and (max-width: 1000px) {
   .card__image {
@@ -102,9 +105,8 @@
     line-height: 15px;
   }
 
-  .card__duration {font-family: Inter;
+  .card__duration {
     font-size: 10px;
     line-height: 12px;
-    
   }
 }
